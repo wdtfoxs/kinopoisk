@@ -1,4 +1,4 @@
-package com.dzlab.itis.entity;
+package ru.springproject.dz.entity;
 
 import javax.persistence.*;
 
