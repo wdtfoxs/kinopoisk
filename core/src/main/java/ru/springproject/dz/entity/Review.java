@@ -4,30 +4,21 @@ import javax.persistence.*;
 
 @Entity
 @Table
+@IdClass(UserMovie.class)
 public class Review {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
     @Column(length = 1000)
     private String review;
 
+    @Id
     @ManyToOne
-    @JoinColumn(name = "review_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
+    @Id
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movie;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getReview() {
         return review;

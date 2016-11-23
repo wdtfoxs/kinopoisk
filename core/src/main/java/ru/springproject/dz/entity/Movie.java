@@ -17,8 +17,8 @@ public class Movie {
     @Column(length = 500)
     private String description;
 
-    @OneToMany(mappedBy = "movies")
-    private Year year;
+    @Column(length = 4)
+    private int year;
 
     @ManyToMany(mappedBy = "movies")
     private List<Genre> genres;
@@ -59,11 +59,11 @@ public class Movie {
         this.description = description;
     }
 
-    public Year getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(Year year) {
+    public void setYear(int year) {
         this.year = year;
     }
 

@@ -9,14 +9,14 @@ public class Rating {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     private int rating;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "movie_id")
+    @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
 
     public User getUser() {

@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "users")
 public class User {
 
     @Id
@@ -25,10 +25,10 @@ public class User {
     @Column(length = 5)
     private UserRole userRole;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
     private List<Rating> ratings;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
     private List<Review> reviews;
 
     public Long getId() {
