@@ -21,7 +21,7 @@
 
     <!-- Настройки бина dataSource будем хранить в отдельном файле, определяем где именно -->
     <bean id="placeholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
-          p:location="jdbc.properties" />
+          p:location="classpath:jdbc.properties" />
 
     <!-- Настройки подключения к БД, бин dataSource -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
