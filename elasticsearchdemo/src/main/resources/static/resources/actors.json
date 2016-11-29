@@ -1,0 +1,22 @@
+[
+  { "name":"Bred",
+    "surname":"Pitt",
+    "awards":[],
+    "role":"ACTOR"
+  },
+  { "name":"Angelina",
+    "surname":"Jolie",
+    "awards":[],
+    "role":"ACTOR"
+  },
+  { "name":"Kventin",
+    "surname":"Tarrantino",
+    "awards":[],
+    "role":"DIRECTOR"
+  },
+  { "name":"Dmitri",
+    "surname":"Nagiev",
+    "awards":[],
+    "role":"ACTOR"
+  }
+]
