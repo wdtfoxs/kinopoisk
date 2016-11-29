@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="Kinopoisk:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="Kinopoisk.war">
-      <element id="artifact" artifact-name="Kinopoisk:war exploded" />
-    </root>
-  </artifact>
-</component>
