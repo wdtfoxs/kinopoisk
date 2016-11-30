@@ -10,7 +10,7 @@
            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- Определяем папку, в которой будем искать DAO компоненты (@Repository) -->
-    <context:component-scan base-package="ru.springproject.dz.repositories" />
+    <context:component-scan base-package="ru.springproject.core.dz.repositories" />
 
     <!-- Настраивает управление транзакциями с помощью аннотации @Transactional -->
     <tx:annotation-driven transaction-manager="hibernateTransactionManager" />
@@ -36,7 +36,7 @@
     <!-- Настройки фабрики сессий Хибернейта -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
           p:dataSource-ref="dataSource"
-          p:packagesToScan="com.springapp.mvc.entity">
+          p:packagesToScan="ru.springproject.core.dz.entity">
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop><!-- SQL диалект -->

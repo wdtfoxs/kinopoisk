@@ -1,5 +1,4 @@
-package ru.springproject.dz.entity;
-
+package ru.springproject.core.dz.entity;
 import java.io.Serializable;
 import java.util.Objects;
 

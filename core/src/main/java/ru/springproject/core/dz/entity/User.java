@@ -1,6 +1,4 @@
-package ru.springproject.dz.entity;
-
-import ru.springproject.dz.entity.enums.UserRole;
+package ru.springproject.core.dz.entity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,7 +21,7 @@ public class User {
     private String email;
 
     @Column(length = 5)
-    private UserRole userRole;
+    private ru.springproject.core.dz.entity.UserRole userRole;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
     private List<Rating> ratings;
@@ -63,11 +61,11 @@ public class User {
         this.email = email;
     }
 
-    public UserRole getUserRole() {
+    public ru.springproject.core.dz.entity.UserRole getUserRole() {
         return userRole;
     }
 
-    public void setUserRole(UserRole userRole) {
+    public void setUserRole(ru.springproject.core.dz.entity.UserRole userRole) {
         this.userRole = userRole;
     }
 

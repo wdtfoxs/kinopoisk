@@ -1,32 +1,22 @@
-package ru.springproject.dz.entity;
-
+package ru.springproject.core.dz.entity;
 import javax.persistence.*;
 
 @Entity
 @Table
 @IdClass(UserMovie.class)
-public class Review {
-
-    @Column(length = 1000)
-    private String review;
+public class Rating {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    private int rating;
+
     @Id
     @ManyToOne
-    @JoinColumn(name = "movie_id")
+    @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
-
-    public String getReview() {
-        return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
-    }
 
     public User getUser() {
         return user;
@@ -34,6 +24,14 @@ public class Review {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public Movie getMovie() {

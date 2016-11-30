@@ -1,6 +1,6 @@
-package ru.springproject.dz.entity;
+package ru.springproject.core.dz.entity;
 
-import ru.springproject.dz.entity.enums.WhoInFilm;
+import ru.springproject.core.dz.entity.enums.WhoInFilm;
 
 import javax.persistence.*;
 import java.util.List;

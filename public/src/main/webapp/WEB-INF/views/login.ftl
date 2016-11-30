@@ -12,16 +12,21 @@
         <div class="col-md-6 login-right">
             <h3>Registered Customers</h3>
             <p>If you have an account with us, please log in.</p>
-            <form>
+            <form method="post" action="/j_spring_security_check">
                 <div>
-                    <span>Email Address<label>*</label></span>
-                    <input type="text">
+                    <span>Username<label>*</label></span>
+                    <input type="text" name="j_username">
                 </div>
                 <div>
                     <span>Password<label>*</label></span>
-                    <input type="text">
+                    <input type="password" name="j_password">
                 </div>
-                <a class="forgot" href="#">Forgot Your Password?</a>
+                <#if error?has_content>
+                    <div style="color: #d8232a;" class="col-sm-offset-2 col-sm-10">Имя пользователя и пароль не подходят</div>
+                </#if>
+                <a class="news-letter" href="#">
+                    <label class="checkbox"><input type="checkbox" name="_spring_security_remember_me"><i> </i>Sign Up for Newsletter</label>
+                </a>
                 <input type="submit" value="Login">
             </form>
         </div>

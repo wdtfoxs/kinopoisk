@@ -1,4 +1,4 @@
-package ru.springproject.dz.entity;
+package ru.springproject.core.dz.entity;
 
 import javax.persistence.*;
 import java.util.List;
