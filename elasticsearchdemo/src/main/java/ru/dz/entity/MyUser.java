@@ -8,6 +8,13 @@ import javax.persistence.*;
 @Entity
 public class MyUser {
     public MyUser(){}
+    public MyUser(String name, String surname,String email, String password){
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.userRole = "ROLE_USER";
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -18,6 +25,7 @@ public class MyUser {
     private String password;
     @Column(nullable = false,unique = true)
     private String email;
+    private String userRole;
 
     public Long getId() {
         return id;
@@ -57,5 +65,13 @@ public class MyUser {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 }
