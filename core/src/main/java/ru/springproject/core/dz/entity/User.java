@@ -1,5 +1,7 @@
 package ru.springproject.core.dz.entity;
 
+import ru.springproject.core.dz.entity.enums.UserRole;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -20,8 +22,13 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    @Column(length = 5)
-    private ru.springproject.core.dz.entity.UserRole userRole;
+    private Integer vkontakte_id;
+
+    private String photo;
+
+    @Column(length = 10)
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
     private List<Rating> ratings;
@@ -61,14 +68,6 @@ public class User {
         this.email = email;
     }
 
-    public ru.springproject.core.dz.entity.UserRole getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(ru.springproject.core.dz.entity.UserRole userRole) {
-        this.userRole = userRole;
-    }
-
     public List<Rating> getRatings() {
         return ratings;
     }
@@ -84,5 +83,30 @@ public class User {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+
+    public Integer getVkontakte_id() {
+        return vkontakte_id;
+    }
+
+    public void setVkontakte_id(Integer vkontakte_id) {
+        this.vkontakte_id = vkontakte_id;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
 }
 

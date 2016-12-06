@@ -22,7 +22,8 @@ public class People {
     @Column(length = 50)
     private String patronymic;
 
-    @Column(length = 8)
+    @Column(length = 15)
+    @Enumerated(EnumType.STRING)
     private WhoInFilm whoInFilm;
 
     @ManyToMany(mappedBy = "peoples")

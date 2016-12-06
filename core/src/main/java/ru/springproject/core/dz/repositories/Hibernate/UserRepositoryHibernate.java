@@ -39,4 +39,10 @@ public class UserRepositoryHibernate implements UserRepository {
         return (User) curSession().createCriteria(User.class)
                 .add(Restrictions.eq("email", email)).uniqueResult();
     }
+
+    @Override
+    public User getUserByVkID(Integer id) {
+        return (User) curSession().createCriteria(User.class)
+                .add(Restrictions.eq("vkontakte_id", id)).uniqueResult();
+    }
 }

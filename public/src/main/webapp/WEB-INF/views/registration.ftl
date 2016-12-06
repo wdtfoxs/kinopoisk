@@ -36,8 +36,19 @@
             <div class="clearfix"></div>
             <div class="register-but">
                     <input type="submit" value="submit">
-                    <div class="clearfix"></div>
             </div>
+        <div class="social_reg">
+            <a class="btn btn-block btn-social btn-vk" href="/registration/regvk">
+                <span class="fa fa-vk"></span> Sign in with VK
+            </a>
+        </div>
+            <div class="social_reg">
+                <a class="btn btn-block btn-social btn-vk">
+                    <span class="fa fa-vk"></span> Sign in with VK
+                </a>
+            </div>
+            <div class="clearfix"></div>
+
         </@form.form>
     </div>
 </div>

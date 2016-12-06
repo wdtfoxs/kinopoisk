@@ -170,6 +170,10 @@ ul.header_right_box.anon {
 ul.header_right_box.auth{
 	margin: 0 0 0 0;
 }
+ul.header_right_box.auth img{
+	height: 30px;
+	border-radius: 50px
+}
 ul.header_right_box li{
 	float: left;
 	margin: 0 3%;
@@ -1418,21 +1422,27 @@ p.cart {
 	text-decoration: none;
 }
 .register-but{
-	
+	width: 100%;
+}
+.social_reg {
+	float: left;
+	margin: 0 5px;
 }
 .register-but input[type="submit"] {
 	background: #df1f26;
-color: #FFF;
-font-size: 1em;
-padding: 7px 20px;
-transition: 0.5s all;
--webkit-transition: 0.5s all;
--moz-transition: 0.5s all;
--o-transition: 0.5s all;
-display: inline-block;
-text-transform: uppercase;
-border: none;
-outline: none;
+	color: #FFF;
+	font-size: 1em;
+	padding: 7px 20px;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5s all;
+	display: inline-block;
+	text-transform: uppercase;
+	border: none;
+	outline: none;
+	float: left;
+	margin-bottom: 5px;
 }
 .register-but input[type="submit"]:hover {
 	background:#3f444e;

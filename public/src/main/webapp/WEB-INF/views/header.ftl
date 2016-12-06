@@ -26,7 +26,7 @@
         </@sec.authorize>
         <@sec.authorize access="isAuthenticated()">
         <ul class="header_right_box auth">
-            <li><img src="../../resources/images/p1.png" alt=""/></li>
+            <li><img src="<@sec.authentication property="principal.user.photo"/>" alt=""/></li>
             <li><p><a href="/"><@sec.authentication property="principal.username"/></a></p></li>
             <li><p> | </p></li>
             <li><p><a href="/logout">Log out</a></p></li>

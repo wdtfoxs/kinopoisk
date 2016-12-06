@@ -9,4 +9,6 @@ public interface UserRepository {
     User getUseByUsername(String username);
 
     User getUserByEmail(String email);
+
+    User getUserByVkID(Integer id);
 }

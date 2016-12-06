@@ -12,13 +12,17 @@ import ru.springproject.core.dz.services.UserService;
 @Component
 public class MyUserDetailService implements UserDetailsService {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public MyUserDetailService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.getUserByUsername(username);
         if (user == null) throw new UsernameNotFoundException("User with name " + username + " not found");
-        return new ru.springproject.dz.security.MyUserDetail(user);
+        return new MyUserDetail(user);
     }
 }

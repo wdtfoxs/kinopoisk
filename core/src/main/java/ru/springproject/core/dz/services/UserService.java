@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.springproject.core.dz.entity.User;
-import ru.springproject.core.dz.entity.UserRole;
+import ru.springproject.core.dz.entity.enums.UserRole;
 import ru.springproject.core.dz.repositories.UserRepository;
 
 
@@ -20,7 +20,8 @@ public class UserService {
 
     @Transactional
     public void addUser(User user){
-        user.setPassword(DigestUtils.md5Hex(user.getPassword()));
+        if(user.getPassword() != null)
+            user.setPassword(DigestUtils.md5Hex(user.getPassword()));
         user.setUserRole(UserRole.USER);
         userRepository.addUser(user);
     }
@@ -36,7 +37,17 @@ public class UserService {
     }
 
     @Transactional
+    public boolean existsUserByVkId (Integer id){
+        return userRepository.getUserByVkID(id) == null;
+    }
+
+    @Transactional
     public User getUserByUsername(String username){
         return userRepository.getUseByUsername(username);
+    }
+
+    @Transactional
+    public User getUserByVk(Integer id){
+        return userRepository.getUserByVkID(id);
     }
 }

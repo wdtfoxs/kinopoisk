@@ -25,4 +25,5 @@ public class LoginPage {
         request.setAttribute("error", error);
         return "login";
     }
+
 }
