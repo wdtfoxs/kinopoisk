@@ -13,19 +13,26 @@ public class Movie {
     @Column(length = 50)
     private String name;
 
-    @Column(length = 500)
+    @Column(length = 2000)
     private String description;
 
     @Column(length = 4)
     private int year;
 
+    @Column(length = 2)
+    private int age;
+
+    private String image = "../../resources/images/single.jpg";
+
+    private String trailer;
+
     @ManyToMany(mappedBy = "movies")
     private List<Genre> genres;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH})
-    @JoinTable(name = "actors_movies",
-           joinColumns = @JoinColumn(name = "actor_id"),
-           inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    @JoinTable(name = "movies_actors",
+           joinColumns = @JoinColumn(name = "movie_id"),
+           inverseJoinColumns = @JoinColumn(name = "actor_id"))
     private List<People> peoples;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.REFRESH)
@@ -96,5 +103,29 @@ public class Movie {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getTrailer() {
+        return trailer;
+    }
+
+    public void setTrailer(String trailer) {
+        this.trailer = trailer;
     }
 }

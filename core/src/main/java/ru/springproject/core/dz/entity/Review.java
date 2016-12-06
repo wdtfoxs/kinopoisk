@@ -1,13 +1,19 @@
 package ru.springproject.core.dz.entity;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table
 @IdClass(UserMovie.class)
 public class Review {
 
-    @Column(length = 1000)
+    @Column(length = 3000)
     private String review;
+
+    @DateTimeFormat(pattern = "dd.MM.yyyy 'at' HH.mm")
+    private Date date;
 
     @Id
     @ManyToOne
@@ -41,5 +47,13 @@ public class Review {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

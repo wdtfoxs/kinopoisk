@@ -13,17 +13,14 @@ import com.vk.api.sdk.queries.users.UserField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.PagedList;
+import org.springframework.social.facebook.api.Post;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.springproject.core.dz.entity.User;
 import ru.springproject.core.dz.services.UserService;
@@ -32,9 +29,13 @@ import ru.springproject.dz.valid.UserValid;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 
 @Controller
 @RequestMapping("/registration")
@@ -43,14 +44,18 @@ public class RegistrationController {
     private static final String ATTR_REGISTRATION_FORM = "regForm";
     private final HttpServletRequest request;
     private final UserService userService;
+    private Properties prop = new Properties();
+    private InputStream in = new FileInputStream("D:\\kinopoisk\\public\\src\\main\\resources\\application.properties");
 
-    private final String VK_LINK = "https://oauth.vk.com/authorize";
-    private final int CLIENT_ID = 5756557;
-    private final String SECRET_KEY = "uexXpIHhdI94aBAExTbl";
-    private final String REDIRECT_URI = "http://localhost:8080/registration/vk";
+
+//
+//    private final String VK_LINK = "https://oauth.vk.com/authorize";
+//    private final int CLIENT_ID = 5756557;
+//    private final String SECRET_KEY = "uexXpIHhdI94aBAExTbl";
+//    private final String REDIRECT_URI = "http://localhost:8080/registration/vk";
 
     @Autowired
-    public RegistrationController(HttpServletRequest request, UserService userService) {
+    public RegistrationController(HttpServletRequest request, UserService userService) throws FileNotFoundException {
         this.request = request;
         this.userService = userService;
     }
@@ -91,9 +96,10 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "regvk")
-    public RedirectView regThroughVk() {
-        return new RedirectView(VK_LINK + "?client_id=" + CLIENT_ID + "&display=page&redirect_uri=" +
-                REDIRECT_URI + "&scope=email,offline&response_type=code&v=5.60");
+    public RedirectView regThroughVk() throws IOException {
+        prop.load(in);
+        return new RedirectView(prop.getProperty("vk.link") + "?client_id=" + prop.getProperty("vk.client.id") + "&display=page&redirect_uri=" +
+                prop.getProperty("vk.redirecturi") + "&scope=email,offline&response_type=code&v=5.60");
     }
 
     @RequestMapping(value = "/vk", method = RequestMethod.GET)
@@ -101,7 +107,7 @@ public class RegistrationController {
         TransportClient transportClient = new HttpTransportClient();
         VkApiClient vk = new VkApiClient(transportClient);
 
-        UserAuthResponse authResponse = vk.oauth().userAuthorizationCodeFlow(CLIENT_ID, SECRET_KEY, REDIRECT_URI, code).execute();
+        UserAuthResponse authResponse = vk.oauth().userAuthorizationCodeFlow(Integer.valueOf(prop.getProperty("vk.client.id")), prop.getProperty("vk.secretkey"), prop.getProperty("vk.redirecturi"), code).execute();
         List<UserXtrCounters> users = vk.users().get().userIds(authResponse.getUserId() + "").fields(UserField.PHOTO_50).lang(Lang.RU).execute();
 
         UserXtrCounters userXtrCounters = users.get(0);
@@ -123,4 +129,16 @@ public class RegistrationController {
 
         return "redirect:/main";
     }
+
+    @RequestMapping("/regfb")
+    public RedirectView redirectFb() throws IOException {
+        prop.load(in);
+        return new RedirectView(prop.getProperty("fb.link") + "?client_id=" + prop.getProperty("fb.appId") +
+        "&redirect_uri=" + prop.getProperty("fb.redirecturi") + "&scope=email");
+    }
+
+//    @RequestMapping(value = "/fb", method = RequestMethod.GET)
+//    public String regUserByFb(@RequestParam String code){
+//
+//    }
 }

@@ -1,6 +1,6 @@
 package ru.springproject.core.dz.entity;
 
-import ru.springproject.core.dz.entity.enums.WhoInFilm;
+import ru.springproject.core.dz.entity.enums.Role;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,7 +24,7 @@ public class People {
 
     @Column(length = 15)
     @Enumerated(EnumType.STRING)
-    private WhoInFilm whoInFilm;
+    private Role role;
 
     @ManyToMany(mappedBy = "peoples")
     private List<Movie> movies;
@@ -64,12 +64,12 @@ public class People {
         this.patronymic = patronymic;
     }
 
-    public WhoInFilm getWhoInFilm() {
-        return whoInFilm;
+    public Role getRole() {
+        return role;
     }
 
-    public void setWhoInFilm(WhoInFilm whoInFilm) {
-        this.whoInFilm = whoInFilm;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public List<Movie> getMovies() {

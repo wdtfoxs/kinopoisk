@@ -1,5 +1,5 @@
 package ru.springproject.core.dz.entity.enums;
 
-public enum WhoInFilm {
+public enum Role {
     ACTOR, DIRECTOR
 }
