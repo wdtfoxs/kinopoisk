@@ -50,4 +50,9 @@ public class UserService {
     public User getUserByVk(Integer id){
         return userRepository.getUserByVkID(id);
     }
+
+    @Transactional
+    public User getUserById(Long id){
+        return userRepository.getUserById(id);
+    }
 }

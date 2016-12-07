@@ -6,7 +6,7 @@
         <ul class="rslides" id="slider">
             <li><img src="../../resources/images/banner.jpg" class="img-responsive" alt=""/>
                 <div class="button">
-                    <a href="#" class="hvr-shutter-out-horizontal">Watch Now</a>
+                    <a href="/movie/77" class="hvr-shutter-out-horizontal">Watch Now</a>
                 </div>
             </li>
             <li><img src="../../resources/images/banner1.jpg" class="img-responsive" alt=""/>

@@ -11,4 +11,6 @@ public interface UserRepository {
     User getUserByEmail(String email);
 
     User getUserByVkID(Integer id);
+
+    User getUserById(Long id);
 }

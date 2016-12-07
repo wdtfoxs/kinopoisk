@@ -6,15 +6,15 @@
 
     <context:component-scan base-package="ru.springproject.dz.controllers"/>
 
-    <mvc:annotation-driven />
+    <mvc:annotation-driven/>
 
-    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver"
           p:prefix=""
           p:suffix=".ftl"
           p:cache="true"
-          p:contentType="text/html; charset=UTF-8" />
+          p:contentType="text/html; charset=UTF-8"/>
 
     <bean id="freemarkerConfig"
           class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer"

@@ -1,3 +1,4 @@
+<#assign sec=JspTaglibs["http://www.springframework.org/security/tags"]>
 <#include "template.ftl">
 <@mainTemplate title="Кино"/>
 <#macro m_body>
@@ -49,13 +50,13 @@
                 </p>
                 <p class="movie_option"><strong>Actors: </strong>
                     <#list movie.peoples as p>
-                    <#if p.role == "ACTOR">
-                        <a href="#">${p.name} ${p.surname}</a>,
-                    </#if>
+                        <#if p.role == "ACTOR">
+                            <a href="#">${p.name} ${p.surname}</a>,
+                        </#if>
                     </#list>
-                   </p>
+                </p>
                 <p class="movie_option"><strong>Age restriction: </strong>${movie.age}</p>
-                <#--<div class="down_btn"><a class="btn1" href="#"><span> </span>Download</a></div>-->
+            <#--<div class="down_btn"><a class="btn1" href="#"><span> </span>Download</a></div>-->
             </div>
             <div class="clearfix"></div>
             <p class="m_4">${movie.description}</p>
@@ -63,43 +64,59 @@
             <p class="m_4">
                 <iframe width="560" height="315" src="${movie.trailer}" frameborder="0" allowfullscreen></iframe>
             </p>
+            <@sec.authorize access="isAuthenticated()">
+            <#--<#assign userId = "<@sec.authentication property="principal.user.id">"/>-->
+                <#if existReview == false>
+                    <form method="post" action="/review/add">
+                        <div class="text">
+                    <textarea name="review" placeholder="Review"></textarea>
+                        </div>
+                        <div class="form-submit1">
+                            <input name="submit" type="submit" id="submit" value="Submit Your Review"><br>
+                        </div>
+                        <input type="hidden" name="movieid" value="${movie.id}">
+                        <input type="hidden" name="userid" value="<@sec.authentication property="principal.user.id"/>">
+                        <div class="clearfix"></div>
+                    </form>
+                </#if>
             <#--<form method="post" action="contact-post.html">-->
-                <#--<div class="to">-->
-                    <#--<input type="text" class="text" value="Name" onfocus="this.value = '';"-->
-                           <#--onblur="if (this.value == '') {this.value = 'Name';}">-->
-                    <#--<input type="text" class="text" value="Email" onfocus="this.value = '';"-->
-                           <#--onblur="if (this.value == '') {this.value = 'Email';}" style="margin-left:3%">-->
-                <#--</div>-->
-                <#--<div class="text">-->
-                    <#--<textarea value="Message:" onfocus="this.value = '';"-->
-                              <#--onblur="if (this.value == '') {this.value = 'Message';}">Message:</textarea>-->
-                <#--</div>-->
-                <#--<div class="form-submit1">-->
-                    <#--<input name="submit" type="submit" id="submit" value="Submit Your Message"><br>-->
-                <#--</div>-->
-                <#--<div class="clearfix"></div>-->
+            <#--&lt;#&ndash;<div class="to">&ndash;&gt;-->
+            <#--&lt;#&ndash;<input type="text" class="text" value="Name" onfocus="this.value = '';"&ndash;&gt;-->
+            <#--&lt;#&ndash;onblur="if (this.value == '') {this.value = 'Name';}">&ndash;&gt;-->
+            <#--&lt;#&ndash;<input type="text" class="text" value="Email" onfocus="this.value = '';"&ndash;&gt;-->
+            <#--&lt;#&ndash;onblur="if (this.value == '') {this.value = 'Email';}" style="margin-left:3%">&ndash;&gt;-->
+            <#--&lt;#&ndash;</div>&ndash;&gt;-->
+            <#--<div class="text">-->
+            <#--<textarea value="Review:" onfocus="this.value = '';"-->
+            <#--onblur="if (this.value == '') {this.value = 'Review';}">Review:</textarea>-->
+            <#--</div>-->
+            <#--<div class="form-submit1">-->
+            <#--<input name="submit" type="submit" id="submit" value="Submit Your Review"><br>-->
+            <#--</div>-->
+            <#--<div class="clearfix"></div>-->
             <#--</form>-->
+            </@sec.authorize>
             <div class="single">
-                    <#if !(movie.reviews)??>
-                        <h1>К этому фильму еще не написано рецензий</h1>
-                    <#else>
+                <#if !(movie.reviews)??>
+                    <h1>К этому фильму еще не написано рецензий</h1>
+                <#else>
                     <h1>${movie.reviews?size} Comments</h1>
-                        <ul class="single_list">
+                    <ul class="single_list">
                         <#list movie.reviews as r>
 
                             <li>
-                            <div class="preview"><a href="#"><img src="${r.user.photo}" class="img-responsive"
-                                                                  alt=""></a></div>
-                            <div class="data">
-                                <div class="title">${r.user.username} / ${r.date} </div>
+                                <div class="preview"><a href="#"><img src="${r.user.photo}" class="img-responsive"
+                                                                      alt=""></a></div>
+                                <div class="data">
+                                    <div class="title">${r.user.username} / ${r.date} </div>
                                 <#--/ <a href="#">reply</a>-->
-                                <p>${r.review}</p>
-                            </div>
-                            <div class="clearfix"></div>
-                        </li>
+                                    <p>${r.review}</p>
+                                </div>
+                                <div class="clearfix"></div>
+                            </li>
                         </#list>
                     </ul>
-                    </#if>
+                </#if>
             </div>
         </div>
         <div class="col-md-3">
