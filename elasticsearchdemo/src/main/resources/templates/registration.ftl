@@ -1,21 +1,22 @@
-<#assign form=JspTaglibs["http://www.springframework.org/tags/form"]>
 <#include "template.ftl">
 <@mainTemplate title="Регистрация"/>
 <#macro m_body>
 <div class="content">
     <div class="register">
-        <@form.form commandName="regForm" action="/reg" acceptCharset="UTF-8" method="post">
+        <form action="/reg" method="post">
                 <div class="register-top-grid">
                     <h3>Personal Information</h3>
                     <div>
-                        <span>Username<label>*</label></span>
-                        <@form.input path="username" type="text"/>
-                        <@form.errors path="username" cssStyle="color: #d8232a;"/>
+                        <span>Name<label>*</label></span>
+                        <input name="name" type="text"/>
+                    </div>
+                    <div>
+                        <span>Surname<label>*</label></span>
+                        <input name="surname" type="text"/>
                     </div>
                     <div>
                         <span>Email Address<label>*</label></span>
-                        <@form.input path="email" type="email"/>
-                        <@form.errors path="email" cssStyle="color: #d8232a;" />
+                        <input name="email" type="email"/>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -23,13 +24,11 @@
                     <h3>Login Information</h3>
                     <div>
                         <span>Password<label>*</label></span>
-                        <@form.input path="password" type="password"/>
-                        <@form.errors path="password" cssStyle="color: #d8232a;" />
+                        <input name="password"  type="password"/>
                     </div>
                     <div>
                         <span>Confirm Password<label>*</label></span>
-                        <@form.input path="repassword" type="password"/>
-                        <@form.errors path="repassword" cssStyle="color: #d8232a;" />
+                        <input name="repassword" type="password"/>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -38,7 +37,7 @@
                     <input type="submit" value="submit">
                     <div class="clearfix"></div>
             </div>
-        </@form.form>
+        </form>
     </div>
 </div>
 </#macro>

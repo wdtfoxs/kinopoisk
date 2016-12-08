@@ -13,14 +13,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     function hideURLbar() {
         window.scrollTo(0, 1);
     } </script>
-    <link href="../../resources/css/bootstrap.css" rel='stylesheet' type='text/css'/>
-    <link href="../../resources/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="/resources/css/bootstrap.css" rel='stylesheet' type='text/css'/>
+    <link href="/resources/css/style.css" rel="stylesheet" type="text/css" media="all"/>
     <!-- start plugins -->
-    <script type="text/javascript" src="../../resources/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/resources/js/jquery-1.11.1.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:100,200,300,400,500,600,700,800,900'
           rel='stylesheet' type='text/css'>
     <#if title == "Главная">
-        <script src="../../resources/js/responsiveslides.min.js"></script>
+        <script src="/resources/js/responsiveslides.min.js"></script>
         <script>
             $(function () {
                 $("#slider").responsiveSlides({

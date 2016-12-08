@@ -1,26 +1,29 @@
-
 var app = angular.module("movie", ['ngSanitize']);
 
-app.controller("MovieController", function ($scope, $http) {
-    
+app.controller("MovieController", function ($scope, $http,$location,$window) {
+
     $scope.movies = [];
     $scope.type = 'MATCH';
+    $scope.go = function ( movie) {
+        $window.location = movie.src;
+        $location.path( movie.src );
+    };
 
     // $scope.add = function(movie){
     //     $http.post('/api/movies/', movie);
     // };
 
     $scope.search = function () {
-        if (!$scope.searchInput.length){
+        if (!$scope.searchInput.length) {
             $scope.findAll();
             return;
         }
-        if ($scope.type == 'AUTO'){
+        if ($scope.type == 'AUTO') {
             $scope.autocomplete();
             return;
         }
-        $http.get('/api/movies/search', { params: {q: $scope.searchInput, type: $scope.type, page: 1, size: 10 } })
-            .then(function(resp){
+        $http.get('/api/movies/search', {params: {q: $scope.searchInput, type: $scope.type, page: 1, size: 10}})
+            .then(function (resp) {
                 $scope.movies = resp.data;
             })
     };
@@ -41,34 +44,47 @@ app.controller("MovieController", function ($scope, $http) {
                 $scope.movies = resp.data._embedded.movies;
             })
     };
-    
+
     $scope.autocomplete = function () {
 
-        if (!$scope.searchInput.length){
+        if (!$scope.searchInput.length) {
             return;
         }
-        $http.get('/api/movies/autocomplete', { params: {q: $scope.searchInput } })
-            .then(function(resp){
+        $http.get('/api/movies/autocomplete', {params: {q: $scope.searchInput}})
+            .then(function (resp) {
                 let data = JSON.parse(resp.data);
                 $scope.movies = data.hits.hits.map(h => {
-                    let obj = {};
-                    if (h.highlight && h.highlight.hasOwnProperty("name")){
-                        obj.name = h.highlight.name;
-                    } else {
-                        obj.name = h._source.name;
-                    }
+                        let obj = {};
+                if (h.highlight && h.highlight.hasOwnProperty("name")) {
+                    obj.name = h.highlight.name;
+                } else {
+                    obj.name = h._source.name;
+                }
 
-                    if (h.highlight && h.highlight.hasOwnProperty("description")){
-                        obj.description = h.highlight.description;
-                    } else {
-                        obj.description = h._source.description;
-                    }
-                    return obj;
-                })
+                if (h.highlight && h.highlight.hasOwnProperty("description")) {
+                    obj.description = h.highlight.description;
+                } else {
+                    obj.description = h._source.description;
+                }
+                if (h.highlight && h.highlight.hasOwnProperty("id")) {
+                    obj.src = "/movie/"+h.highlight.id;
+                } else {
+                    obj.src = "/movie/"+h._source.id;
+                }
+                if (h.highlight && h.highlight.hasOwnProperty("image")) {
+                    // obj.image = h.highlight.image;
+                    obj.image = '/resources/images/default_film.jpg';
+                } else {
+                    obj.image = '/resources/images/default_film.jpg';
+                }
+                return obj;
+            })
             })
     };
-    
+
     $scope.findAll();
+
 });
+
 
 

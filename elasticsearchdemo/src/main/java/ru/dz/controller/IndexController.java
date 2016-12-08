@@ -12,7 +12,6 @@ import ru.dz.repository.MovieRepository;
 import ru.dz.repository.PersonRepository;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -24,16 +23,18 @@ public class IndexController {
     AwardRepository awardRepository;
     @PostConstruct
     public void init(){
-        movieRepository.save(autoCompite.loadMoviesFromJson());
-        movieRepository.flush();
-        awardRepository.save(autoCompite.loadAwardsFromJson());
-        awardRepository.flush();
-        personRepository.save(autoCompite.loadPeopleFromJson());
-        personRepository.flush();
-        ArrayList<Movie> movies = (ArrayList<Movie>) movieRepository.findAll();
-        for (Movie movy : movies) {
-            movieSearchService.add(movy);
-        }
+        //This is auto-importing methods to full fill the database
+        //TODO replace to another class
+//        movieRepository.save(autoCompite.loadMoviesFromJson());
+//        movieRepository.flush();
+//        awardRepository.save(autoCompite.loadAwardsFromJson());
+//        awardRepository.flush();
+//        personRepository.save(autoCompite.loadPeopleFromJson());
+//        personRepository.flush();
+//        ArrayList<Movie> movies = (ArrayList<Movie>) movieRepository.findAll();
+//        for (Movie movy : movies) {
+//            movieSearchService.add(movy);
+//        }
     }
     private static final String INDEX_TEMPLATE = "index";
     @Autowired

@@ -20,13 +20,14 @@ public class Movie implements MyObject{
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
     private List<Person> workers;
-    private Float rating;
+    private Float rating_num;
     private Date date;
     @Enumerated(value = EnumType.STRING)
     @ElementCollection
     private Set<Genre> genres;
     @Column(length = 2048)
     private String description;
+    private String country;
     @ManyToMany
     @JoinTable(name = "movie_awards",
             joinColumns = @JoinColumn(name = "movie_id"),
@@ -35,6 +36,9 @@ public class Movie implements MyObject{
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
     private List<Comment> comments;
+    @OneToMany(mappedBy = "movie")
+    private List<Rating> ratings;
+    private String image;
 
     public List<Comment> getComments() {
         return comments;
@@ -76,14 +80,6 @@ public class Movie implements MyObject{
         this.date = date;
     }
 
-    public Float getRating() {
-        return rating;
-    }
-
-    public void setRating(Float rating) {
-        this.rating = rating;
-    }
-
     public List<Person> getWorkers() {
         return workers;
     }
@@ -106,5 +102,37 @@ public class Movie implements MyObject{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Float getRating_num() {
+        return rating_num;
+    }
+
+    public void setRating_num(Float rating_num) {
+        this.rating_num = rating_num;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }
