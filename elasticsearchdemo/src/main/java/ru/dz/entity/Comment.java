@@ -1,5 +1,7 @@
 package ru.dz.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -13,6 +15,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Date date;
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "movie_fk")
     private Movie movie;

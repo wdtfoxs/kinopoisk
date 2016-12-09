@@ -1,5 +1,7 @@
 package ru.dz.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +38,7 @@ public class Movie implements MyObject{
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
     private List<Comment> comments;
+    @JsonManagedReference
     @OneToMany(mappedBy = "movie")
     private List<Rating> ratings;
     private String image;
