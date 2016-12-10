@@ -1,6 +1,7 @@
 <html ng-app="movie">
 <head>
     <title>Main Page</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="keywords" content="Movie_store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template,
@@ -11,6 +12,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     function hideURLbar() {
         window.scrollTo(0, 1);
     } </script>
+
     <script type="text/javascript" src="/resources/js/jquery-1.11.1.min.js"></script>
     <link href="/resources/css/bootstrap.css" rel='stylesheet' type='text/css'/>
     <link href="/resources/css/style.css" rel="stylesheet" type="text/css" media="all"/>
@@ -119,11 +121,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <tbody>
                     <tr ng-repeat="movie in movies">
 
-                        <td><img ng-src="{{movie.image}}" class="thumbnail" width="50px" height="50px"></td>
+                        <td><img ng-src="{{movie.image}}" class="thumbnail" width="100px" height="100px"></td>
                         <td ng-bind-html="movie.name"></td>
                         <td>{{movie.description}}</td>
                         <td>
-                            <button class="btn btn-info" ng-click="go(movie)">More>></button>
+                            <button class="btn btn-info" ng-click="go(movie)" >More>></button>
                         </td>
                     </tr>
                     </tbody>

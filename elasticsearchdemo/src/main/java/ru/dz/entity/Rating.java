@@ -14,7 +14,7 @@ public class Rating {
     private Movie movie;
     @OneToOne
     private MyUser user;
-    private Float rating;
+    private Integer rating;
 
 
     public Long getId() {
@@ -41,11 +41,11 @@ public class Rating {
         this.user = user;
     }
 
-    public Float getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(Float rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 }

@@ -3,6 +3,8 @@ package ru.dz.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +24,7 @@ public class Movie implements MyObject{
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
     private List<Person> workers;
-    private Float rating_num;
+    private Integer rating_num;
     private Date date;
     @Enumerated(value = EnumType.STRING)
     @ElementCollection
@@ -30,6 +32,7 @@ public class Movie implements MyObject{
     @Column(length = 2048)
     private String description;
     private String country;
+    private Integer voted_number;
     @ManyToMany
     @JoinTable(name = "movie_awards",
             joinColumns = @JoinColumn(name = "movie_id"),
@@ -42,6 +45,8 @@ public class Movie implements MyObject{
     @OneToMany(mappedBy = "movie")
     private List<Rating> ratings;
     private String image;
+    @Transient
+    private Integer isVoted;
 
     public List<Comment> getComments() {
         return comments;
@@ -107,14 +112,6 @@ public class Movie implements MyObject{
         this.id = id;
     }
 
-    public Float getRating_num() {
-        return rating_num;
-    }
-
-    public void setRating_num(Float rating_num) {
-        this.rating_num = rating_num;
-    }
-
     public List<Rating> getRatings() {
         return ratings;
     }
@@ -138,4 +135,38 @@ public class Movie implements MyObject{
     public void setCountry(String country) {
         this.country = country;
     }
+
+    public Integer getVoted_number() {
+        return voted_number;
+    }
+
+    public void setVoted_number(Integer voted_number) {
+        this.voted_number = voted_number;
+    }
+
+    public Integer getRating_num() {
+        return rating_num;
+    }
+
+    public void setRating_num(Integer rating_num) {
+        this.rating_num = rating_num;
+    }
+
+    public Integer getIsVoted() {
+        return isVoted;
+    }
+
+    public void setIsVoted(Integer isVoted) {
+        this.isVoted = isVoted;
+    }
+    @Transient
+    public Integer getRealRating(){
+        return Math.round(this.getRating_num()/this.getVoted_number());
+    }
+    public String getAbsoluteRating(){
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+        return df.format(this.getRating_num()/this.getVoted_number());
+    }
+
 }

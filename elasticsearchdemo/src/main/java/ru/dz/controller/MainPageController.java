@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.dz.elastic.MovieSearchService;
 import ru.dz.entity.Movie;
 import ru.dz.repository.MovieRepository;
+import ru.dz.repository.RatingRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by Vlad.M on 07.12.2016.
@@ -22,13 +24,21 @@ public class MainPageController {
     MovieRepository movieRepository;
     @PostConstruct
     private void init(){
+
         ArrayList<Movie> movies = (ArrayList<Movie>) movieRepository.findAll();
         for (Movie movy : movies) {
+            if (Objects.equals(movy.getImage(), null)){
+                movy.setImage("/resources/images/default_film.jpg");
+                movieRepository.saveAndFlush(movy);
+            }
             movieSearchService.add(movy);
         }
     }
+    @Autowired
+    RatingRepository ratingRepository;
     @RequestMapping(value = "/main", method = RequestMethod.GET)
     public String loadpage(){
+
         return "main";
     }
 }

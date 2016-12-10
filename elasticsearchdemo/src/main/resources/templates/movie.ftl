@@ -2,6 +2,7 @@
 <@mainTemplate title="Кино"/>
 <#macro m_body>
 <script src="/resources/js/test.js"></script>
+<link href="/resources/css/rating.css" rel="stylesheet">
 <div class="content">
     <div class="movie_top">
         <#if movie??>
@@ -13,7 +14,7 @@
             </h3>
             <div class="grid images_3_of_2">
                 <div class="movie_image">
-                    <span class="movie_rating">5.0</span>
+                    <span class="movie_rating">${movie.getAbsoluteRating()}</span>
                     <#if movie.image??>
                         <img src="${movie.image}" class="img-responsive" alt=""/>
                     <#else>
@@ -21,24 +22,27 @@
                     </#if>
                 </div>
                 <div class="movie_rate">
-                    <div class="rating_desc"><p>Your Vote :</p></div>
+                    <div class="rating_desc"><p>Rating :</p></div>
                     <form action="" class="sky-form">
-                        <fieldset>
-                            <section>
-                                <div class="rating">
-                                    <input type="radio" name="stars-rating" id="stars-rating-5">
-                                    <label for="stars-rating-5"><i class="icon-star"></i></label>
-                                    <input type="radio" name="stars-rating" id="stars-rating-4">
-                                    <label for="stars-rating-4"><i class="icon-star"></i></label>
-                                    <input type="radio" name="stars-rating" id="stars-rating-3">
-                                    <label for="stars-rating-3"><i class="icon-star"></i></label>
-                                    <input type="radio" name="stars-rating" id="stars-rating-2">
-                                    <label for="stars-rating-2"><i class="icon-star"></i></label>
-                                    <input type="radio" name="stars-rating" id="stars-rating-1">
-                                    <label for="stars-rating-1"><i class="icon-star"></i></label>
-                                </div>
-                            </section>
-                        </fieldset>
+
+                                    <#if canvote == 1>
+                                        <fieldset class="rating2">
+                                            <input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                                            <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                                            <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
+                                            <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                                            <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+
+                                        </fieldset>
+                                    <#else >
+                                    <fieldset class="rating2">
+
+                                        <#list 1..movie.getRealRating() as r>
+                                            <span class="glyphicon glyphicon-star" style="color: greenyellow"></span>
+                                        </#list>
+
+                                    </fieldset>
+                                    </#if>
                     </form>
                     <div class="clearfix"></div>
                 </div>
@@ -74,6 +78,7 @@
         <p class="m_4"><#if movie.description??>
             <h5>Description</h5>
         ${movie.description}
+
 
             </p>
             <#if access == 1 >

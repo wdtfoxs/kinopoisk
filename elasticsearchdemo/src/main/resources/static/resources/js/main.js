@@ -3,11 +3,8 @@ var app = angular.module("movie", ['ngSanitize']);
 app.controller("MovieController", function ($scope, $http,$location,$window) {
 
     $scope.movies = [];
-    $scope.type = 'MATCH';
-    $scope.go = function ( movie) {
-        $window.location = movie.src;
-        $location.path( movie.src );
-    };
+    $scope.type = 'AUTO';
+
 
     // $scope.add = function(movie){
     //     $http.post('/api/movies/', movie);
@@ -44,12 +41,16 @@ app.controller("MovieController", function ($scope, $http,$location,$window) {
                 $scope.movies = resp.data._embedded.movies;
             })
     };
-
+    $scope.go = function (movie) {
+        $window.location = movie.img_url;
+        $location.path(movie.img_url);
+    };
     $scope.autocomplete = function () {
 
         if (!$scope.searchInput.length) {
             return;
         }
+
         $http.get('/api/movies/autocomplete', {params: {q: $scope.searchInput}})
             .then(function (resp) {
                 let data = JSON.parse(resp.data);
@@ -67,15 +68,15 @@ app.controller("MovieController", function ($scope, $http,$location,$window) {
                     obj.description = h._source.description;
                 }
                 if (h.highlight && h.highlight.hasOwnProperty("id")) {
-                    obj.src = "/movie/"+h.highlight.id;
+                    obj.img_url = "/movie/"+h.highlight.id;
                 } else {
-                    obj.src = "/movie/"+h._source.id;
+                    obj.img_url = "/movie/"+h._source.id;
                 }
                 if (h.highlight && h.highlight.hasOwnProperty("image")) {
                     // obj.image = h.highlight.image;
-                    obj.image = '/resources/images/default_film.jpg';
+                    obj.image = h.highlight.image;
                 } else {
-                    obj.image = '/resources/images/default_film.jpg';
+                    obj.image = h._source.image;
                 }
                 return obj;
             })
