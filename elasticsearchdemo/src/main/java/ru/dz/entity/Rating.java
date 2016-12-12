@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Table
 @IdClass(UserMovie.class)
 public class Rating {
+    public Rating(){}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,5 +48,13 @@ public class Rating {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

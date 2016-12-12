@@ -9,7 +9,9 @@ import java.util.Set;
 @Entity
 @Table
 public class Movie implements MyObject{
-
+    public Movie(){
+        this.image = "/resources/images/single.jpg";
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -26,7 +28,7 @@ public class Movie implements MyObject{
     @Column(length = 2)
     private int age;
 
-    private String image = "../../resources/images/single.jpg";
+    private String image;
 
     private String trailer = "https://www.youtube.com/embed/NupZzt15c4g";
 

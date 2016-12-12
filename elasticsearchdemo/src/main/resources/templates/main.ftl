@@ -81,7 +81,8 @@
                     <tbody>
                     <tr ng-repeat="movie in movies">
 
-                        <td><img ng-src="{{movie.image}}" class="thumbnail" width="100px" height="100px"></td>
+                        <td><img ng-src="{{movie.image}}" class="thumbnail" width="100px" height="100px">
+                        </td>
                         <td ng-bind-html="movie.name"></td>
                         <td>{{movie.description}}</td>
                         <td>
