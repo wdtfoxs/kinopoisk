@@ -2,6 +2,7 @@ package ru.dz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -9,8 +10,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.dz.entity.MyUser;
+import ru.dz.entity.User;
 import ru.dz.repository.UserRepository;
+import ru.dz.security.MyUserDetail;
 
 /**
  * Created by Vlad.M on 29.11.2016.
@@ -18,11 +20,15 @@ import ru.dz.repository.UserRepository;
 @Controller
 public class RegisterController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @RequestMapping(value = "/reg",method = RequestMethod.GET)
-    public String getRegPage(ModelMap modelMap){
+    @Autowired
+    public RegisterController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @RequestMapping(value = "/reg", method = RequestMethod.GET)
+    public String getRegPage(ModelMap modelMap) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (!(auth instanceof AnonymousAuthenticationToken)) {
@@ -34,22 +40,31 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/reg", method = RequestMethod.POST)
-    public String registrate(@RequestParam("name")String name,@RequestParam("surname") String surname,
-                             @RequestParam("email") String email, @RequestParam("password") String password,
-                             @RequestParam("repassword") String confirm_password, ModelMap map){
-        if (name.length()<2 || surname.length()<2 || name.length()>30 || surname.length()>50){
+    public String registration(@RequestParam("username") String username, @RequestParam("email") String email,
+                               @RequestParam("password") String password,
+                               @RequestParam("repassword") String confirm_password, ModelMap map) {
+        if (username.length() < 2 || username.length() > 30) {
             map.addAttribute("message", "Заполните корректно имя и фамилию");
             return "registration";
         }
-        if (password.length()<5 || password.length()>30){
+        if (password.length() < 5 || password.length() > 30) {
             map.addAttribute("message", "пароль должен быть не меньше 5 и не больше 30 символов");
             return "registration";
         }
-        if (!password.equals(confirm_password)){
+        if (!password.equals(confirm_password)) {
             map.addAttribute("message", "Пароли не совпадают");
             return "registration";
         }
-        userRepository.save(new MyUser(name,surname,email,password));
-        return "index";
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setPhoto("../../resources/images/p1.png");
+        userRepository.save(user);
+
+        MyUserDetail myUserDetail = new MyUserDetail(user);
+        Authentication auth = new UsernamePasswordAuthenticationToken(myUserDetail, null, myUserDetail.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        return "redirect:/main";
     }
 }

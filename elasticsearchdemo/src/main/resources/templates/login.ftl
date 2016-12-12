@@ -15,7 +15,7 @@
             <form method="post" action="/login">
                 <div>
                     <span>Username<label>*</label></span>
-                    <input type="text" name="email">
+                    <input type="text" name="username">
                 </div>
                 <div>
                     <span>Password<label>*</label></span>

@@ -7,12 +7,8 @@
                 <div class="register-top-grid">
                     <h3>Personal Information</h3>
                     <div>
-                        <span>Name<label>*</label></span>
-                        <input name="name" type="text"/>
-                    </div>
-                    <div>
-                        <span>Surname<label>*</label></span>
-                        <input name="surname" type="text"/>
+                        <span>Username<label>*</label></span>
+                        <input name="username" type="text"/>
                     </div>
                     <div>
                         <span>Email Address<label>*</label></span>
@@ -34,9 +30,19 @@
                 </div>
             <div class="clearfix"></div>
             <div class="register-but">
-                    <input type="submit" value="submit">
-                    <div class="clearfix"></div>
+                <input type="submit" value="submit">
             </div>
+            <div class="social_reg">
+                <a class="btn btn-block btn-social btn-vk" href="/reg/regvk">
+                    <span class="fa fa-vk"></span> Sign in with VK
+                </a>
+            </div>
+            <div class="social_reg">
+                <a class="btn btn-block btn-social btn-vk">
+                    <span class="fa fa-vk"></span> Sign in with VK
+                </a>
+            </div>
+            <div class="clearfix"></div>
         </form>
     </div>
 </div>
