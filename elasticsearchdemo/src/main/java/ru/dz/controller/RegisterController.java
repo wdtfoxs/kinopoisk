@@ -10,9 +10,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 import ru.dz.entity.User;
 import ru.dz.repository.UserRepository;
 import ru.dz.security.MyUserDetail;
+
+import javax.servlet.http.HttpServletRequest;
+
+import static org.apache.coyote.http11.Constants.a;
 
 /**
  * Created by Vlad.M on 29.11.2016.
@@ -21,19 +27,19 @@ import ru.dz.security.MyUserDetail;
 public class RegisterController {
 
     private final UserRepository userRepository;
+    private final HttpServletRequest request;
 
     @Autowired
-    public RegisterController(UserRepository userRepository) {
+    public RegisterController(UserRepository userRepository, HttpServletRequest request) {
         this.userRepository = userRepository;
+        this.request = request;
     }
 
     @RequestMapping(value = "/reg", method = RequestMethod.GET)
     public String getRegPage(ModelMap modelMap) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         if (!(auth instanceof AnonymousAuthenticationToken)) {
 
-    /* The user is logged in :) */
             return "index";
         }
         return "registration";
@@ -59,7 +65,6 @@ public class RegisterController {
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
-        user.setPhoto("../../resources/images/p1.png");
         userRepository.save(user);
 
         MyUserDetail myUserDetail = new MyUserDetail(user);

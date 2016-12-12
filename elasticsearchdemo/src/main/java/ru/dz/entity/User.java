@@ -25,7 +25,7 @@ public class User implements MyObject{
 
     private Integer vkontakte_id;
 
-    private String photo;
+    private String photo = "../../resources/images/p1.png";
 
     @Column(length = 10)
     @Enumerated(EnumType.STRING)

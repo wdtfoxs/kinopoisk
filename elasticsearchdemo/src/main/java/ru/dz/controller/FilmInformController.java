@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import ru.dz.aspects.annotation.IncludeUser;
 import ru.dz.entity.Movie;
 import ru.dz.entity.Rating;
 import ru.dz.entity.Review;
@@ -22,15 +23,21 @@ import java.util.Date;
 @Controller
 @RequestMapping(value = "/movie")
 public class FilmInformController {
-    @Autowired
-    MovieRepository movieRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    CommentRepository commentRepository;
-    @Autowired
-    RatingRepository ratingRepository;
 
+    private final MovieRepository movieRepository;
+    private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
+    private final RatingRepository ratingRepository;
+
+    @Autowired
+    public FilmInformController(MovieRepository movieRepository, UserRepository userRepository, CommentRepository commentRepository, RatingRepository ratingRepository) {
+        this.movieRepository = movieRepository;
+        this.userRepository = userRepository;
+        this.commentRepository = commentRepository;
+        this.ratingRepository = ratingRepository;
+    }
+
+    @IncludeUser
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String loadFilm(@PathVariable("id") Long id, ModelMap modelMap) {
         Movie movie = movieRepository.findOne(id);
