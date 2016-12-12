@@ -3,7 +3,9 @@ package ru.springproject.core.dz.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.springproject.core.dz.entity.Movie;
 import ru.springproject.core.dz.entity.Review;
+import ru.springproject.core.dz.entity.User;
 import ru.springproject.core.dz.repositories.ReviewRepository;
 import java.util.Date;
 
@@ -23,8 +25,8 @@ public class ReviewService {
     }
 
     @Transactional
-    public boolean existReview(Long movieId, Long userId) {
-        return !(reviewRepository.getReview(movieId, userId) == null);
+    public boolean existReview(User user, Movie movie) {
+        return !(reviewRepository.getReview(user, movie) == null);
     }
 
     @Transactional
@@ -36,4 +38,5 @@ public class ReviewService {
         rev.setDate(new Date());
         reviewRepository.addReview(rev);
     }
+
 }

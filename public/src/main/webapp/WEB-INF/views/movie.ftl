@@ -1,6 +1,7 @@
 <#assign sec=JspTaglibs["http://www.springframework.org/security/tags"]>
+<#assign form=JspTaglibs["http://www.springframework.org/tags/form"]>
 <#include "template.ftl">
-<@mainTemplate title="Кино"/>
+<@mainTemplate title="${movie.name}"/>
 <#macro m_body>
 <div class="content">
     <div class="movie_top">
@@ -11,25 +12,31 @@
                     <img src="${movie.image}" class="img-responsive" alt=""/>
                 </div>
                 <div class="movie_rate">
-                    <div class="rating_desc"><p>Your Vote :</p></div>
-                    <form action="" class="sky-form">
-                        <fieldset>
-                            <section>
-                                <div class="rating">
-                                    <input type="radio" name="stars-rating" id="stars-rating-5">
-                                    <label for="stars-rating-5"><i class="icon-star"></i></label>
-                                    <input type="radio" name="stars-rating" id="stars-rating-4">
-                                    <label for="stars-rating-4"><i class="icon-star"></i></label>
-                                    <input type="radio" name="stars-rating" id="stars-rating-3">
-                                    <label for="stars-rating-3"><i class="icon-star"></i></label>
-                                    <input type="radio" name="stars-rating" id="stars-rating-2">
-                                    <label for="stars-rating-2"><i class="icon-star"></i></label>
-                                    <input type="radio" name="stars-rating" id="stars-rating-1">
-                                    <label for="stars-rating-1"><i class="icon-star"></i></label>
-                                </div>
-                            </section>
-                        </fieldset>
-                    </form>
+                    <@sec.authorize access="isAuthenticated()">
+                        <div class="rating_desc"><p>Your Vote :</p></div>
+                        <@form.form commandName="ratingForm" action="/rating" acceptCharset="UTF-8" method="post" cssClass="sky-form">
+                            <fieldset>
+                                <section>
+                                    <div class="rating">
+                                        <@form.radiobutton path="rating" id="stars-rating-5" value="5"/>
+                                        <label for="stars-rating-5"><i class="icon-star"></i></label>
+                                        <@form.radiobutton path="rating" id="stars-rating-4" value="4"/>
+                                        <label for="stars-rating-4"><i class="icon-star"></i></label>
+                                        <@form.radiobutton path="rating" id="stars-rating-3" value="3"/>
+                                        <label for="stars-rating-3"><i class="icon-star"></i></label>
+                                        <@form.radiobutton path="rating" id="stars-rating-2" value="2"/>
+                                        <label for="stars-rating-2"><i class="icon-star"></i></label>
+                                        <@form.radiobutton path="rating" id="stars-rating-1" value="1"/>
+                                        <label for="stars-rating-1"><i class="icon-star"></i></label>
+                                    </div>
+                                </section>
+                            </fieldset>
+                            <input type="hidden" name="movieid" value="${movie.id}">
+                            <input type="hidden" name="userid"
+                                   value="<@sec.authentication property="principal.user.id"/>">
+                            <input type="submit" value="go" id="submit" style="display:none;">
+                        </@form.form>
+                    </@sec.authorize>
                     <div class="clearfix"></div>
                 </div>
             </div>
@@ -65,11 +72,10 @@
                 <iframe width="560" height="315" src="${movie.trailer}" frameborder="0" allowfullscreen></iframe>
             </p>
             <@sec.authorize access="isAuthenticated()">
-            <#--<#assign userId = "<@sec.authentication property="principal.user.id">"/>-->
                 <#if existReview == false>
                     <form method="post" action="/review/add">
                         <div class="text">
-                    <textarea name="review" placeholder="Review"></textarea>
+                            <textarea name="review" placeholder="Review"></textarea>
                         </div>
                         <div class="form-submit1">
                             <input name="submit" type="submit" id="submit" value="Submit Your Review"><br>
@@ -79,22 +85,6 @@
                         <div class="clearfix"></div>
                     </form>
                 </#if>
-            <#--<form method="post" action="contact-post.html">-->
-            <#--&lt;#&ndash;<div class="to">&ndash;&gt;-->
-            <#--&lt;#&ndash;<input type="text" class="text" value="Name" onfocus="this.value = '';"&ndash;&gt;-->
-            <#--&lt;#&ndash;onblur="if (this.value == '') {this.value = 'Name';}">&ndash;&gt;-->
-            <#--&lt;#&ndash;<input type="text" class="text" value="Email" onfocus="this.value = '';"&ndash;&gt;-->
-            <#--&lt;#&ndash;onblur="if (this.value == '') {this.value = 'Email';}" style="margin-left:3%">&ndash;&gt;-->
-            <#--&lt;#&ndash;</div>&ndash;&gt;-->
-            <#--<div class="text">-->
-            <#--<textarea value="Review:" onfocus="this.value = '';"-->
-            <#--onblur="if (this.value == '') {this.value = 'Review';}">Review:</textarea>-->
-            <#--</div>-->
-            <#--<div class="form-submit1">-->
-            <#--<input name="submit" type="submit" id="submit" value="Submit Your Review"><br>-->
-            <#--</div>-->
-            <#--<div class="clearfix"></div>-->
-            <#--</form>-->
             </@sec.authorize>
             <div class="single">
                 <#if !(movie.reviews)??>
@@ -159,4 +149,22 @@
         <div class="clearfix"></div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function (){
+        var but5 = document.getElementById("stars-rating-5");
+        var but4 = document.getElementById("stars-rating-4");
+        var but3 = document.getElementById("stars-rating-3");
+        var but2 = document.getElementById("stars-rating-2");
+        var but1 = document.getElementById("stars-rating-1");
+        but5.addEventListener("click", submitRating);
+        but4.addEventListener("click", submitRating);
+        but3.addEventListener("click", submitRating);
+        but2.addEventListener("click", submitRating);
+        but1.addEventListener("click", submitRating);
+
+        function submitRating() {
+            document.getElementById("submit").click();
+        }
+    });
+</script>
 </#macro>

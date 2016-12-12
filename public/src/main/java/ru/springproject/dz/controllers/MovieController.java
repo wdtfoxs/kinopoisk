@@ -5,11 +5,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.view.RedirectView;
+import ru.springproject.core.dz.entity.Movie;
 import ru.springproject.core.dz.services.MovieService;
 import ru.springproject.core.dz.services.ReviewService;
 import ru.springproject.dz.security.MyUserDetail;
+import ru.springproject.dz.valid.RatingBean;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +20,7 @@ public class MovieController {
     private final HttpServletRequest request;
     private MovieService movieService;
     private ReviewService reviewService;
+    private static final String RATING_FORM = "ratingForm";
 
     @Autowired
     public MovieController(HttpServletRequest request, MovieService movieService, ReviewService reviewService) {
@@ -32,10 +33,12 @@ public class MovieController {
     @RequestMapping(value = "{id}")
     public String getMovie(@PathVariable Long id){
         Object user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Movie movie = movieService.getMovieById(id);
         if (user instanceof MyUserDetail){
-            request.setAttribute("existReview", reviewService.existReview(id, ((MyUserDetail) user).getUser().getId()));
+            request.setAttribute("existReview", reviewService.existReview(((MyUserDetail) user).getUser(), movie));
         }
-        request.setAttribute("movie", movieService.getMovieById(id));
+        request.setAttribute("movie", movie);
+        request.setAttribute(RATING_FORM, new RatingBean());
         return "movie";
     }
 }
