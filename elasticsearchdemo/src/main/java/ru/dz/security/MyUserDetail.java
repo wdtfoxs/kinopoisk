@@ -3,7 +3,7 @@ package ru.dz.security;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.dz.entity.MyUser;
+import ru.dz.entity.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,9 +11,9 @@ import java.util.List;
 
 public class MyUserDetail implements UserDetails {
 
-    private MyUser user;
+    private User user;
 
-    public MyUserDetail(MyUser user) {
+    public MyUserDetail(User user) {
         this.user = user;
     }
 
@@ -53,5 +53,13 @@ public class MyUserDetail implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

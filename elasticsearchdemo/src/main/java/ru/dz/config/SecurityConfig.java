@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import ru.dz.security.MyUserDetailService;
 
 /**
  * Created by Vlad.M on 29.11.2016.
@@ -20,13 +21,19 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final MyUserDetailService userDetailsService;
+
     @Autowired
-    UserDetailsService userDetailsService;
+    public SecurityConfig(MyUserDetailService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/profile").access("hasRole('ROLE_USER')")
                 .and()
-                .formLogin().loginPage("/auth").loginProcessingUrl("/login").failureUrl("/auth?error=Wrong email or password").usernameParameter("email").passwordParameter("password")
+                .formLogin().loginPage("/login").loginProcessingUrl("/login").failureUrl("/login?error=true").usernameParameter("username").passwordParameter("password")
 
                 .defaultSuccessUrl("/main")
                 .and()
@@ -45,3 +52,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("user").password("password").roles("USER");
     }
 }
+

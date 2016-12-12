@@ -1,6 +1,10 @@
 <#macro mainTemplate title="HomePage" styles=[] scripts=[] >
 <!DOCTYPE HTML>
-<html>
+    <#if title="Главная">
+    <html ng-app="movie">
+    <#else>
+    <html>
+    </#if>
 <head>
     <title>${title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,16 +36,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 });
             });
         </script>
+        <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:100,200,300,400,500,600,700,800,900'
+              rel='stylesheet' type='text/css'>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.min.js"></script>
+        <script src="/resources/js/main.js"></script>
+
+        <script src="/resources/js/responsiveslides.min.js"></script>
+    </#if>
+    <#if title="Регистрация">
+        <link href="/resources/css/bootstrap-social.css" rel="stylesheet">
+        <link href="/resources/css/docs.css" rel="stylesheet">
+        <link href="/resources/css/font-awesome.css" rel="stylesheet">
     </#if>
 </head>
-<body>
+    <#if title="Главная">
+        <body ng-controller="MovieController">
+    <#else>
+        <body>
+    </#if>
 <div class="container">
     <div class="container_wrap">
         <#include "header.ftl">
         <@m_body/>
     </div>
 </div>
-<#include "footer.ftl">
+    <#include "footer.ftl">
 </body>
 </html>
 </#macro>
