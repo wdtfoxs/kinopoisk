@@ -9,10 +9,20 @@
                     <div>
                         <span>Username<label>*</label></span>
                         <input name="username" type="text"/>
+                        <#if username??>
+                            <h6>${username}</h6>
+                        <#elseif usernameex??>
+                            <h6>${usernameex}</h6>
+                        </#if>
                     </div>
                     <div>
                         <span>Email Address<label>*</label></span>
                         <input name="email" type="email"/>
+                        <#if email??>
+                            <h6>${email}</h6>
+                        <#elseif emailex??>
+                            <h6>${emailex}</h6>
+                        </#if>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -21,10 +31,16 @@
                     <div>
                         <span>Password<label>*</label></span>
                         <input name="password"  type="password"/>
+                        <#if password??>
+                            <h6>${password}</h6>
+                        </#if>
                     </div>
                     <div>
                         <span>Confirm Password<label>*</label></span>
                         <input name="repassword" type="password"/>
+                        <#if repassword??>
+                            <h6>${repassword}</h6>
+                        </#if>
                     </div>
                     <div class="clearfix"></div>
                 </div>

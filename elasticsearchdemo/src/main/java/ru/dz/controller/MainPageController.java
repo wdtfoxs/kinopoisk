@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.dz.aspects.annotation.IncludeUser;
 import ru.dz.elastic.MovieSearchService;
 import ru.dz.entity.Movie;
+import ru.dz.repository.AutoCompite;
 import ru.dz.repository.MovieRepository;
 import ru.dz.repository.RatingRepository;
 

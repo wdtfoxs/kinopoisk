@@ -23,7 +23,7 @@ public class User implements MyObject{
     @Column(unique = true)
     private String email;
 
-    private Integer vkontakte_id;
+    private Integer vk;
 
     private String photo = "../../resources/images/p1.png";
 
@@ -85,12 +85,12 @@ public class User implements MyObject{
         this.reviews = reviews;
     }
 
-    public Integer getVkontakte_id() {
-        return vkontakte_id;
+    public Integer getVk() {
+        return vk;
     }
 
-    public void setVkontakte_id(Integer vkontakte_id) {
-        this.vkontakte_id = vkontakte_id;
+    public void setVk(Integer vk) {
+        this.vk = vk;
     }
 
     public String getPhoto() {
