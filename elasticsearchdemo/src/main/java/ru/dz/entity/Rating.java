@@ -1,4 +1,6 @@
 package ru.dz.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 /**
  * Created by Vlad.M on 07.12.2016.
@@ -9,6 +11,7 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @JsonBackReference
     @ManyToOne
     @JoinTable(name = "rated_movies")
     private Movie movie;
