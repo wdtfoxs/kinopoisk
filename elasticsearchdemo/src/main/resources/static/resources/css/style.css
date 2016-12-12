@@ -217,6 +217,10 @@ ul.header_right_box li {
     float: left;
     margin: 0 3%;
 }
+ul.header_right_box.auth img{
+    height: 30px;
+    border-radius: 50px
+}
 
 ul.header_right_box li p {
     font-size: 1.2em;
@@ -1569,6 +1573,9 @@ p.cart {
     padding-bottom: 20px;
     margin: 0;
 
+}
+.register h6{
+    color: #d8232a;
 }
 
 .register-top-grid div, .register-bottom-grid div {

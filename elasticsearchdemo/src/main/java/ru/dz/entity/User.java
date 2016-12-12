@@ -23,16 +23,20 @@ public class User implements MyObject{
     @Column(unique = true)
     private String email;
 
-    private Integer vkontakte_id;
+    private Integer vk;
 
-    private String photo;
+    private String photo = "../../resources/images/p1.png";
 
     @Column(length = 10)
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
-    private List<Rating> ratings;
+    //TODO: these films are liked by user and can be viewed in /cabinet
+    @ManyToMany
+    @JoinTable(name = "user_liked_films",
+            joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "film_id"))
+    private List<Movie> movies;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH)
     private List<Review> reviews;
@@ -69,14 +73,6 @@ public class User implements MyObject{
         this.email = email;
     }
 
-    public List<Rating> getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
-    }
-
     public List<Review> getReviews() {
         return reviews;
     }
@@ -85,12 +81,12 @@ public class User implements MyObject{
         this.reviews = reviews;
     }
 
-    public Integer getVkontakte_id() {
-        return vkontakte_id;
+    public Integer getVk() {
+        return vk;
     }
 
-    public void setVkontakte_id(Integer vkontakte_id) {
-        this.vkontakte_id = vkontakte_id;
+    public void setVk(Integer vk) {
+        this.vk = vk;
     }
 
     public String getPhoto() {
@@ -109,5 +105,12 @@ public class User implements MyObject{
         this.userRole = userRole;
     }
 
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
 }
 

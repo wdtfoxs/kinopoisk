@@ -48,4 +48,6 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-validation')
     runtime('org.postgresql:postgresql')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile group: 'com.vk.api', name: 'sdk', version: '0.3.6'
+
 }

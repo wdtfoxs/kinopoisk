@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 @Entity
 @Table
-@IdClass(UserMovie.class)
 public class Rating {
     public Rating(){}
 
@@ -15,13 +14,10 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @OneToOne
     private User user;
-
     private int rating;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;

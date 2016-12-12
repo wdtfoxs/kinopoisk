@@ -55,6 +55,7 @@ public class Movie implements MyObject{
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.REFRESH)
     private List<Review> reviews;
+    private List<Comment> comments;
 
 //    @ManyToMany
 //    @JoinTable(name = "movie_awards",
@@ -189,5 +190,13 @@ public class Movie implements MyObject{
 
     public void setAwards(List<Award> awards) {
         this.awards = awards;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
