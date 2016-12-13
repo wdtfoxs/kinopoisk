@@ -1,8 +1,12 @@
 package ru.dz.entity;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import ru.dz.entity.enums.Genre;
 import ru.dz.entity.interfaces.MyObject;
 
 import javax.persistence.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Set;
 
@@ -55,6 +59,8 @@ public class Movie implements MyObject{
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.REFRESH)
     private List<Review> reviews;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "movie")
     private List<Comment> comments;
 
 //    @ManyToMany
@@ -199,4 +205,10 @@ public class Movie implements MyObject{
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
+    public String getAbsoluteRating(){
+                DecimalFormat df = new DecimalFormat("#.##");
+                df.setRoundingMode(RoundingMode.CEILING);
+        if (this.getVoted_number()==0) return "0.0";
+                return df.format(this.getRating_num()/this.getVoted_number());
+            }
 }

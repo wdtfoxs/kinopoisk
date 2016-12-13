@@ -9,16 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.dz.aspects.annotation.IncludeUser;
+import ru.dz.entity.Comment;
 import ru.dz.entity.Movie;
 import ru.dz.entity.Rating;
-import ru.dz.entity.Review;
 import ru.dz.entity.User;
 import ru.dz.repository.CommentRepository;
 import ru.dz.repository.MovieRepository;
 import ru.dz.repository.RatingRepository;
 import ru.dz.repository.UserRepository;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,14 +50,18 @@ public class FilmInformController {
             modelMap.addAttribute("canvote", 0);
         } else {
             modelMap.addAttribute("access", 1);
-            User current_user = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+            String name = SecurityContextHolder.getContext().getAuthentication().getName();
+            User current_user = userRepository.findByUsername(name);
             List<Rating> rating = ratingRepository.findByMovie(movie);
             if (rating!=null) {
                 for (Rating r: rating){
                     if (r.getUser() == current_user){
-                        modelMap.addAttribute("canvote", "0");
+                        modelMap.addAttribute("canvote", 0);
                         return "movie";
                     }
+                }
+                if (rating.size()==0){
+                    modelMap.addAttribute("canvote", 1);
                 }
             }
             else modelMap.addAttribute("canvote", 1);
@@ -73,26 +76,25 @@ public class FilmInformController {
 //    @Secured("ROLE_USER")
     @PreAuthorize("isAuthenticated()")
     @ResponseBody
-    public Review addComment(@PathVariable("id") Long id, @RequestParam("content") String text) {
+    public Comment addComment(@PathVariable("id") Long id, @RequestParam("content") String text) {
         System.out.println(text);
-        Review review = new Review();
-        review.setDate(new Date());
-        review.setReview(text);
+        Comment comment = new Comment();
+        comment.setContent(text);
         Movie movie = movieRepository.findOne(id);
-        review.setMovie(movie);
-        review.setUser(userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()));
-        commentRepository.save(review);
-        movie.getReviews().add(review);
+        comment.setMovie(movie);
+        comment.setUser(userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        Comment added_comment = commentRepository.save(comment);
+        movie.getComments().add(added_comment);
         movieRepository.saveAndFlush(movie);
-        return review;
+        return added_comment;
     }
 
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/{id}/rate")
-    public Float rate(@PathVariable("id") Long id, @RequestParam("value") Integer value) {
+    public @ResponseBody float rate(@PathVariable("id") Long id, @RequestParam("value") Integer value) {
         Movie movie = movieRepository.findOne(id);
-        User current_user = userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+        User current_user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         Rating rating = null;
         //TODO: should be here any check, if user had already rated??
         movie.setVoted_number(1);

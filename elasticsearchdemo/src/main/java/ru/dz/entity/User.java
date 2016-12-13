@@ -25,11 +25,11 @@ public class User implements MyObject{
 
     private Integer vk;
 
-    private String photo = "../../resources/images/p1.png";
+    private String photo = "/resources/images/p1.png";
 
     @Column(length = 10)
     @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+    private UserRole userRole = UserRole.USER;
 
     //TODO: these films are liked by user and can be viewed in /cabinet
     @ManyToMany

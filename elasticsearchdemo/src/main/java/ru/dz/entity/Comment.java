@@ -1,5 +1,7 @@
 package ru.dz.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,12 +17,10 @@ public class Comment {
 
     private Long id;
 
-    private Date date;
-
+    private Date date = new Date();
+    @JsonBackReference
     @ManyToOne
-
     @JoinColumn(name = "movie_fk")
-
     private Movie movie;
 
     @ManyToOne
