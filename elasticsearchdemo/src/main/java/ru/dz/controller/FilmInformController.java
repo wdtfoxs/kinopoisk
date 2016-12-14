@@ -44,6 +44,8 @@ public class FilmInformController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String loadFilm(@PathVariable("id") Long id, ModelMap modelMap) {
         Movie movie = movieRepository.findOne(id);
+        modelMap.addAttribute("comments", movieRepository.findOne(id).getComments());
+        modelMap.addAttribute("movie", movieRepository.findOne(id));
         if (SecurityContextHolder.getContext().getAuthentication() != null &&
                 SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) {
             modelMap.addAttribute("access", 0);
@@ -54,20 +56,17 @@ public class FilmInformController {
             User current_user = userRepository.findByUsername(name);
             List<Rating> rating = ratingRepository.findByMovie(movie);
             if (rating!=null) {
-                for (Rating r: rating){
-                    if (r.getUser() == current_user){
+                for (Rating r : rating) {
+                    if (r.getUser() == current_user) {
                         modelMap.addAttribute("canvote", 0);
                         return "movie";
                     }
                 }
-                if (rating.size()==0){
-                    modelMap.addAttribute("canvote", 1);
-                }
             }
-            else modelMap.addAttribute("canvote", 1);
+
+            modelMap.addAttribute("canvote", 1);
         }
-        modelMap.addAttribute("comments", movieRepository.findOne(id).getComments());
-        modelMap.addAttribute("movie", movieRepository.findOne(id));
+
         return "movie";
     }
 
@@ -92,19 +91,22 @@ public class FilmInformController {
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/{id}/rate")
-    public @ResponseBody float rate(@PathVariable("id") Long id, @RequestParam("value") Integer value) {
+    public @ResponseBody float rate(@PathVariable("id") Long id, @RequestParam("value") Integer value,ModelMap modelMap) {
         Movie movie = movieRepository.findOne(id);
         User current_user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         Rating rating = null;
+        modelMap.addAttribute("canvote",0);
+        modelMap.addAttribute("access",1);
         //TODO: should be here any check, if user had already rated??
-        movie.setVoted_number(1);
-        movie.setRating_num(value);
         if (ratingRepository.findByMovie(movie).isEmpty()){
+            movie.setVoted_number(1);
+            movie.setRating_num(value);
             rating = new Rating();
             rating.setUser(current_user);
             rating.setRating(value);
             rating.setMovie(movie);
-            ratingRepository.saveAndFlush(rating);
+            movie.getRatings().add(ratingRepository.saveAndFlush(rating));
+            modelMap.addAttribute("movie",movieRepository.saveAndFlush(movie));
             return (float) (value);
         }
         else {
@@ -114,7 +116,7 @@ public class FilmInformController {
             rating.setMovie(movie);
             ratingRepository.saveAndFlush(rating);
             movie.getRatings().add(rating);
-            movieRepository.saveAndFlush(movie);
+            modelMap.addAttribute("movie",movieRepository.saveAndFlush(movie));
             movie.setRating_num(movie.getRating_num() + value);
             movie.setVoted_number(movie.getVoted_number() + 1);
             return (float) (movie.getRating_num() / movie.getVoted_number());
