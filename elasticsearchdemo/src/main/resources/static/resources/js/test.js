@@ -22,3 +22,6 @@ function addComment(id) {
         }
     })
 }
+function showsearch() {
+    $("#sh_search").show();
+}

@@ -1,6 +1,7 @@
 <#include "template.ftl"/>
 <@mainTemplate title="Главная"/>
 <#macro m_body>
+<script src="/resources/js/test.js"></script>
 <div class="slider">
     <div class="callbacks_container">
         <ul class="rslides" id="slider">
@@ -47,8 +48,8 @@
             <div class="container">
                 <div class="col-md-6 form-inline">
                     <label for="search">Поиск:</label>
-                    <input class="form-control" ng-model="searchInput" id="search" ng-change="search()"
-                           ng-model-options="{ debounce: 300 }"/>
+                    <input class="form-control" ng-model="searchInput" id="search" ng-change="search()" width="300px"
+                           ng-model-options="{ debounce: 300 }"/><button type="button" class="btn btn-primary" onclick="showsearch()">\/</button>
                 </div>
                 <div class="col-md-3">
                     <select class="form-control" ng-model="type" ng-change="search()">
@@ -58,6 +59,11 @@
                         <option value="FUZZY">fuzzy</option>
                         <option value="AUTO">autocomplete</option>
                     </select>
+                </div>
+                <div class="col-md-6 form-inline" hidden id="sh_search">
+                    <label for="search_by_actor"></label>
+                    <input class="form-control" ng-model="search_by_actor_Input" id="search_by_actor" ng-change="search_by_actor()"
+                           ng-model-options="{ debounce: 300 }" placeholder="Введите имя актера"/>
                 </div>
             <#--<div class="col-md-3">-->
             <#--<button ng-click="load()" class="btn btn-md btn-default">Импортировать все фильмы</button>-->

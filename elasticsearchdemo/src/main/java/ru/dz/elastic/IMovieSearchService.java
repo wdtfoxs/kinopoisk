@@ -41,4 +41,5 @@ public interface IMovieSearchService {
     List<Movie> fuzzyQuery(String q);
 
     String autocomplete(String q);
+    List<Movie> searchByActor(String q);
 }

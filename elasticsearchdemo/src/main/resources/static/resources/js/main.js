@@ -9,7 +9,14 @@ app.controller("MovieController", function ($scope, $http,$location,$window) {
     // $scope.add = function(movie){
     //     $http.post('/api/movies/', movie);
     // };
-
+    $scope.search_by_actor = function () {
+        if ($scope.search_by_actor_Input.length>2){
+            $http.get('/api/movies/searchbyactor', {params: {q: $scope.search_by_actor_Input, page: 1, size: 10}})
+                .then(function (resp) {
+                    $scope.movies = resp.data;
+                })
+        } 
+    };
     $scope.search = function () {
         if (!$scope.searchInput.length) {
             $scope.findAll();

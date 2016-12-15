@@ -16,6 +16,13 @@
     "id": {
       "type": "integer",
       "include_in_all": false
+    },
+    "peoples":{
+        "properties": {
+          "id": {"type":"integer"},
+          "name": {"type" : "string"},
+          "surname" : {"type": "string"}
+        }
 
     }
   }

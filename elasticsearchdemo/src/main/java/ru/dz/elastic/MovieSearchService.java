@@ -25,7 +25,7 @@ import static ru.dz.config.ElasticConfig.MOVIE_TYPE;
 @Service
 public class MovieSearchService implements IMovieSearchService {
 
-
+    private static final String ACTOR_FIELD = "peoples";
     private static final String DESCRIPTION_FIELD = "description";
     private static final String NAME_FIELD = "name";
     private static final String ALL_FIELD = "_all";
@@ -135,6 +135,15 @@ public class MovieSearchService implements IMovieSearchService {
             }
         });
         return result;
+    }
+    public List<Movie> searchByActor(String q){
+        SearchResponse response = client.prepareSearch(MOVIE_CORP_INDEX)
+                .setTypes(MOVIE_TYPE)
+                .setSearchType(SearchType.DFS_QUERY_THEN_FETCH)
+                .setQuery(QueryBuilders.matchQuery(ACTOR_FIELD,q))
+                .execute()
+                .actionGet();
+        return getResult(response);
     }
 
 }

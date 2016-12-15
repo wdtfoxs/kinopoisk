@@ -64,4 +64,8 @@ public class MovieController {
         return ResponseEntity.ok(movieSearchService.autocomplete(q));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/movies/searchbyactor")
+    public ResponseEntity<List<Movie>> searchByActor(@RequestParam String q){
+        return ResponseEntity.ok(movieSearchService.searchByActor(q));
+    }
 }
