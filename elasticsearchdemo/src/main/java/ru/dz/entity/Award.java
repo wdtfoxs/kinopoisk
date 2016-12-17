@@ -19,6 +19,8 @@ public class Award {
 
     private String description;
 
+    private String photo = "/resources/images/oscar.jpg";
+
     @ManyToOne
     @JoinColumn(name = "movie_id")
     private Movie movie;
@@ -73,5 +75,13 @@ public class Award {
 
     public void setPeople(People people) {
         this.people = people;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

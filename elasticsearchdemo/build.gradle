@@ -49,5 +49,6 @@ dependencies {
     runtime('org.postgresql:postgresql')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     compile group: 'com.vk.api', name: 'sdk', version: '0.3.6'
+    compile 'io.jsonwebtoken:jjwt:0.7.0'
 
 }

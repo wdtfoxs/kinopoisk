@@ -53,11 +53,11 @@ public class RegisterController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String getRegPage(ModelMap modelMap) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!(auth instanceof AnonymousAuthenticationToken)) {
-
-            return "index";
-        }
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        if (!(auth instanceof AnonymousAuthenticationToken)) {
+//
+//            return "index";
+//        }
         return "registration";
     }
 

@@ -33,6 +33,8 @@ public class People implements MyObject{
     @ManyToMany(mappedBy = "peoples")
     private List<Movie> movies;
 
+    private String photo = "/resources/images/noactor.png";
+
 //    @ManyToMany
 //    @JoinTable(name = "people_award",
 //            joinColumns = @JoinColumn(name = "people_id"),
@@ -102,5 +104,13 @@ public class People implements MyObject{
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

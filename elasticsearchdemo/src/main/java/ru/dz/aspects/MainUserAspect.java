@@ -30,7 +30,7 @@ public class MainUserAspect {
     }
 
     @Before("includeUserMethod()")
-    public void includeMenuInfo() {
+    public void includeUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             request.setAttribute(USER, ((MyUserDetail) authentication.getPrincipal()).getUser());
