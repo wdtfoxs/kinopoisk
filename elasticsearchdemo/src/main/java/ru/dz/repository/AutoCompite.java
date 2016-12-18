@@ -5,6 +5,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import org.springframework.jdbc.core.JdbcTemplate;
 import ru.dz.entity.Award;
+import ru.dz.entity.Country;
 import ru.dz.entity.Movie;
 import ru.dz.entity.People;
 
@@ -25,6 +26,16 @@ public class AutoCompite {
             e.printStackTrace();
         }
         return movies;
+    }
+
+    public List<Country> loadCountryFromJson() {
+        List<Country> countries = null;
+        try {
+            countries = mapper.readValue(getResource("static/resources/country.json"), mapper.getTypeFactory().constructCollectionType(List.class, Country.class));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return countries;
     }
 
     public List<People> loadPeopleFromJson() {

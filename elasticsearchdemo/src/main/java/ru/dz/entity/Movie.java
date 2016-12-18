@@ -36,7 +36,8 @@ public class Movie implements MyObject{
 
     private String trailer = "https://www.youtube.com/embed/NupZzt15c4g";
 
-    private String country;
+    @OneToOne
+    private Country country;
 
     @Enumerated(value = EnumType.STRING)
     @ElementCollection
@@ -182,11 +183,11 @@ public class Movie implements MyObject{
         this.genres = genres;
     }
 
-    public String getCountry() {
+    public Country getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 

@@ -53,11 +53,6 @@
                     <span class="fa fa-vk"></span> Sign in with VK
                 </a>
             </div>
-            <div class="social_reg">
-                <a class="btn btn-block btn-social btn-vk">
-                    <span class="fa fa-vk"></span> Sign in with VK
-                </a>
-            </div>
             <div class="clearfix"></div>
         </form>
     </div>
