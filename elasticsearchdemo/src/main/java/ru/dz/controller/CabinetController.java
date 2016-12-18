@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by Vlad.M on 10.12.2016.
  */
 @Controller
-@RequestMapping(value = "/cabinet")
+@RequestMapping(value = "/profile")
 @PreAuthorize("isAuthenticated()")
 public class CabinetController {
+    @RequestMapping(value = "")
+    public String loadPage(){
+        return "profile";
+    }
 }

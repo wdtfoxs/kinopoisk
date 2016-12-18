@@ -17,6 +17,7 @@ import java.util.List;
 @Controller
 public class IndexController {
     private AutoCompite autoCompite = new AutoCompite();
+    private static final String API_MAPPING = "/api/getall";
     @Autowired
     PersonRepository personRepository;
     @Autowired
@@ -45,7 +46,7 @@ public class IndexController {
     private String get(){
         return INDEX_TEMPLATE;
     }
-    @RequestMapping(value = "loadtest")
+    @RequestMapping(value = API_MAPPING)
     private ResponseEntity<List<Movie>> getall(){
         return ResponseEntity.ok(autoCompite.loadMoviesFromJson());
     }

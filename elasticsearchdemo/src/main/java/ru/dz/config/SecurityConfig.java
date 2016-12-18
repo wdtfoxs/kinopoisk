@@ -1,8 +1,6 @@
 package ru.dz.config;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,10 +8,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
-import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ru.dz.security.MyUserDetailService;
 
@@ -39,10 +33,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.addFilter(requestHeaderAuthenticationFilter())
 //                .antMatcher("/protected/**").authorizeRequests().anyRequest().authenticated();
 
-        http.authorizeRequests().antMatchers("/profile").access("hasRole('ROLE_USER')")
+        http.authorizeRequests()
+                .antMatchers("/profile").access("hasRole('USER')")
+                .antMatchers("/admin/**").access("hasRole('ADMIN')")
+                .antMatchers("/api/**").access("hasRole('ADMIN') or hasRole('PARTNER')")
                 .and()
-                .formLogin().loginPage("/login").loginProcessingUrl("/login").failureUrl("/login?error=true").usernameParameter("username").passwordParameter("password")
-
+                .formLogin().loginPage("/login").loginProcessingUrl("/login")
+                .failureUrl("/login?error=true").usernameParameter("username")
+                .passwordParameter("password")
                 .defaultSuccessUrl("/main")
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/main")
