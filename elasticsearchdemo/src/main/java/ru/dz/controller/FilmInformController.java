@@ -110,6 +110,7 @@ public class FilmInformController {
             rating.setMovie(movie);
             movie.getRatings().add(ratingRepository.saveAndFlush(rating));
             modelMap.addAttribute("movie",movieRepository.saveAndFlush(movie));
+            movieRepository.saveAndFlush(movie);
             return (float) (value);
         }
         else {
@@ -117,11 +118,13 @@ public class FilmInformController {
             rating = new Rating();
             rating.setUser(current_user);
             rating.setMovie(movie);
+            rating.setRating(value);
             ratingRepository.saveAndFlush(rating);
             movie.getRatings().add(rating);
             modelMap.addAttribute("movie",movieRepository.saveAndFlush(movie));
             movie.setRating_num(movie.getRating_num() + value);
             movie.setVoted_number(movie.getVoted_number() + 1);
+            movieRepository.saveAndFlush(movie);
             return (float) (movie.getRating_num() / movie.getVoted_number());
         }
     }
