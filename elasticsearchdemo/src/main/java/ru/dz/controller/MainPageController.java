@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.dz.aspects.annotation.IncludeUser;
 import ru.dz.elastic.MovieSearchService;
+import ru.dz.entity.Movie;
 import ru.dz.repository.*;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 
 /**
@@ -46,11 +48,11 @@ public class MainPageController {
         movieRepository.save(autoCompite.loadMoviesFromJson());
         countryRepository.save(autoCompite.loadCountryFromJson());
         awardRepository.save(autoCompite.createRelationships(movieRepository.findAll(), peopleRepository.findAll()));
-//        ArrayList<Movie> movies = (ArrayList<Movie>) movieRepository.findAll();
-//        for (Movie movy : movies) {
-//            Movie added = movieRepository.saveAndFlush(movy);
-//            movieSearchService.add(added);
-//        }
+        ArrayList<Movie> movies = (ArrayList<Movie>) movieRepository.findAll();
+        for (Movie movy : movies) {
+            Movie added = movieRepository.saveAndFlush(movy);
+            movieSearchService.add(added);
+        }
     }
 
     @IncludeUser

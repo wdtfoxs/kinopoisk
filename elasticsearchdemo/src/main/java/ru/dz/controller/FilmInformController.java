@@ -58,6 +58,7 @@ public class FilmInformController {
                 if (rating != null) {
                     for (Rating r : rating) {
                         if (r.getUser() == current_user) {
+                            modelMap.addAttribute("movie", movieRepository.findOne(id));
                             modelMap.addAttribute("canvote", 0);
                             return "movie";
                         }

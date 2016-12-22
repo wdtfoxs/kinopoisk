@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.dz.aspects.annotation.IncludeUser;
+import ru.dz.elastic.MovieSearchService;
 import ru.dz.entity.Movie;
 import ru.dz.entity.People;
 import ru.dz.repository.CountryRepository;
@@ -13,7 +14,6 @@ import ru.dz.repository.MovieRepository;
 import ru.dz.repository.PeopleRepository;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +33,8 @@ public class AddFilmController {
         this.movieRepository = movieRepository;
         this.peopleRepository = peopleRepository;
     }
+    @Autowired
+    MovieSearchService movieSearchService;
 
     @IncludeUser
     @RequestMapping(method = RequestMethod.GET)
@@ -60,6 +62,7 @@ public class AddFilmController {
         }
         movie.setCountry(countryRepository.findOne(country));
         movieRepository.saveAndFlush(movie);
+        movieSearchService.add(movieRepository.saveAndFlush(movie));
         request.getSession().setAttribute("movie", movie);
         return "redirect:/movie/" + movie.getId();
 //        return "redirect:/actor";
