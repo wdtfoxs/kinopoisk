@@ -44,7 +44,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
         <script src="/resources/js/responsiveslides.min.js"></script>
     </#if>
-    <#if title="Регистрация">
+    <#if title="Регистрация" || title="Логин">
         <link href="/resources/css/bootstrap-social.css" rel="stylesheet">
         <link href="/resources/css/docs.css" rel="stylesheet">
         <link href="/resources/css/font-awesome.css" rel="stylesheet">

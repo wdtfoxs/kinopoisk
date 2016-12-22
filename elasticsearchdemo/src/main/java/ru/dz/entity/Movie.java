@@ -15,6 +15,7 @@ import java.util.Set;
 public class Movie implements MyObject{
     public Movie(){
         this.image = "/resources/images/single.jpg";
+        this.trailer  = "https://www.youtube.com/embed/NupZzt15c4g";
     }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,7 +35,7 @@ public class Movie implements MyObject{
 
     private String image;
 
-    private String trailer = "https://www.youtube.com/embed/NupZzt15c4g";
+    private String trailer;
 
     @OneToOne
     private Country country;

@@ -8,6 +8,11 @@
             <p>By creating an account with our store, you will be able to move through the checkout process faster,
                 store multiple shipping addresses, view and track your orders in your account and more.</p>
             <a class="acount-btn" href="/reg">Create an Account</a>
+            <div class="social_reg">
+                <a class="btn btn-block btn-social btn-vk" href="/reg/regvk">
+                    <span class="fa fa-vk"></span> Sign in with VK
+                </a>
+            </div>
         </div>
         <div class="col-md-6 login-right">
             <h3>Registered Customers</h3>

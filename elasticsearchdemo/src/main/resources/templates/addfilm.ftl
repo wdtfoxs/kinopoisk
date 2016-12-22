@@ -1,5 +1,5 @@
 <#include "template.ftl">
-<@mainTemplate title="Регистрация"/>
+<@mainTemplate title="Добавление фильма"/>
 <#macro m_body>
 <div class="content">
     <div class="register">
@@ -38,14 +38,14 @@
                         </#list>
                     </select>
                 </div>
-                <div>
-                    <span>Actors<label>*</label></span>
-                    <select class="form-control" name="country">
-                        <#list actors as a>
-                            <option value="${a.id}">${a.name}</option>
-                        </#list>
-                    </select>
-                </div>
+                <#--<div>-->
+                    <#--<span>Actors<label>*</label></span>-->
+                    <#--<select class="form-control" name="country">-->
+                        <#--<#list actors as a>-->
+                            <#--<option value="${a.id}">${a.name}</option>-->
+                        <#--</#list>-->
+                    <#--</select>-->
+                <#--</div>-->
                 <div class="clearfix"></div>
             </div>
             <div class="clearfix"></div>
