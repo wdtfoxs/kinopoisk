@@ -26,7 +26,10 @@ public class MainPageController {
     private final CountryRepository countryRepository;
 
     @Autowired
-    public MainPageController(MovieSearchService movieSearchService, MovieRepository movieRepository, RatingRepository ratingRepository, HttpServletRequest request, PeopleRepository peopleRepository, AwardRepository awardRepository, CountryRepository countryRepository) {
+    public MainPageController(MovieSearchService movieSearchService, MovieRepository movieRepository,
+                              RatingRepository ratingRepository, HttpServletRequest request,
+                              PeopleRepository peopleRepository, AwardRepository awardRepository,
+                              CountryRepository countryRepository) {
         this.movieSearchService = movieSearchService;
         this.movieRepository = movieRepository;
         this.ratingRepository = ratingRepository;
@@ -38,11 +41,11 @@ public class MainPageController {
 
     @PostConstruct
     private void init() {
-        AutoCompite autoCompite = new AutoCompite();
-        movieRepository.save(autoCompite.loadMoviesFromJson());
-        countryRepository.save(autoCompite.loadCountryFromJson());
-        peopleRepository.save(autoCompite.loadPeopleFromJson());
-        awardRepository.save(autoCompite.loadAwardsFromJson());
+//        AutoCompite autoCompite = new AutoCompite();
+//        peopleRepository.save(autoCompite.loadPeopleFromJson());
+//        movieRepository.save(autoCompite.loadMoviesFromJson());
+//        countryRepository.save(autoCompite.loadCountryFromJson());
+//        awardRepository.save(autoCompite.createRelationships(movieRepository.findAll(), peopleRepository.findAll()));
 //        ArrayList<Movie> movies = (ArrayList<Movie>) movieRepository.findAll();
 //        for (Movie movy : movies) {
 //            Movie added = movieRepository.saveAndFlush(movy);

@@ -44,28 +44,30 @@ public class FilmInformController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String loadFilm(@PathVariable("id") Long id, ModelMap modelMap) {
         Movie movie = movieRepository.findOne(id);
-        modelMap.addAttribute("comments", movieRepository.findOne(id).getComments());
-        modelMap.addAttribute("movie", movieRepository.findOne(id));
-        if (SecurityContextHolder.getContext().getAuthentication() != null &&
-                SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) {
-            modelMap.addAttribute("access", 0);
-            modelMap.addAttribute("canvote", 0);
-        } else {
-            modelMap.addAttribute("access", 1);
-            String name = SecurityContextHolder.getContext().getAuthentication().getName();
-            User current_user = userRepository.findByUsername(name);
-            List<Rating> rating = ratingRepository.findByMovie(movie);
-            if (rating!=null) {
-                for (Rating r : rating) {
-                    if (r.getUser() == current_user) {
-                        modelMap.addAttribute("canvote", 0);
-                        return "movie";
+        if (movie != null) {
+            modelMap.addAttribute("comments", movieRepository.findOne(id).getComments());
+            if (SecurityContextHolder.getContext().getAuthentication() != null &&
+                    SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken) {
+                modelMap.addAttribute("access", 0);
+                modelMap.addAttribute("canvote", 0);
+            } else {
+                modelMap.addAttribute("access", 1);
+                String name = SecurityContextHolder.getContext().getAuthentication().getName();
+                User current_user = userRepository.findByUsername(name);
+                List<Rating> rating = ratingRepository.findByMovie(movie);
+                if (rating != null) {
+                    for (Rating r : rating) {
+                        if (r.getUser() == current_user) {
+                            modelMap.addAttribute("canvote", 0);
+                            return "movie";
+                        }
                     }
                 }
-            }
 
-            modelMap.addAttribute("canvote", 1);
+                modelMap.addAttribute("canvote", 1);
+            }
         }
+        modelMap.addAttribute("movie", movieRepository.findOne(id));
 
         return "movie";
     }

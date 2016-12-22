@@ -1,8 +1,8 @@
 package ru.dz.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.dz.entity.People;
 
-public interface PeopleRepository extends CrudRepository<People,Long> {
+public interface PeopleRepository extends JpaRepository<People, Long> {
 
 }

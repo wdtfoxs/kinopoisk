@@ -2,21 +2,25 @@
   { "name":"Bred",
     "surname":"Pitt",
     "awards":[],
-    "role":"ACTOR"
+    "role":"ACTOR",
+    "age": 40
   },
   { "name":"Angelina",
     "surname":"Jolie",
     "awards":[],
-    "role":"ACTOR"
+    "role":"ACTOR",
+    "age": 23
   },
   { "name":"Kventin",
     "surname":"Tarrantino",
     "awards":[],
-    "role":"DIRECTOR"
+    "role":"DIRECTOR",
+    "age": 55
   },
   { "name":"Dmitri",
     "surname":"Nagiev",
     "awards":[],
-    "role":"ACTOR"
+    "role":"ACTOR",
+    "age": 40
   }
 ]

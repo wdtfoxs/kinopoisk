@@ -17,7 +17,11 @@
                 <div class="desc1 span_3_of_2">
                     <p class="movie_option"><strong>Name: </strong>${people.name}</p>
                     <p class="movie_option"><strong>Surname: </strong>${people.surname}</p>
-                    <p class="movie_option"><strong>Patronymic: </strong>${people.patronymic}</p>
+                    <p class="movie_option"><strong>Patronymic: </strong>
+                        <#if people.patronymic??>
+                            ${people.patronymic}
+                        </#if>
+                    </p>
                     <p class="movie_option"><strong>Role: </strong>${people.role}</p>
                     <p class="movie_option"><strong>Age: </strong>${people.age}</p>
                     <p class="movie_option"><strong>Movies: </strong>
@@ -35,8 +39,8 @@
                         <#if people.awards??>
                             <#list people.awards as a>
                                 <a href="/award/${a.id}">
-                                ${a.name} ${a.year},
-                                </a>
+                                ${a.name} (${a.year} г.)
+                                </a>,
                             </#list>
                         <#else >
                             The actor has no awards

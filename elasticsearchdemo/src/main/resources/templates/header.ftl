@@ -1,7 +1,12 @@
 <div class="header_top">
     <div class="col-sm-3 logo"><a href="/"><img src="/resources/images/logo.png" alt=""/></a></div>
     <div class="col-sm-6 nav">
-        <#--<ul>-->
+        <ul>
+            <#if user??>
+                <#if user.userRole == "ROLE_ADMIN">
+                    <p><a href="/add">Добавить фильм</a></p>
+                </#if>
+            </#if>
             <#--<li><span class="simptip-position-bottom simptip-movable" data-tooltip="comic"><a-->
                     <#--href="movie.html"> </a></span></li>-->
             <#--<li><span class="simptip-position-bottom simptip-movable" data-tooltip="movie"><a-->
@@ -14,7 +19,7 @@
                     <#--href="movie.html"> </a></span></li>-->
             <#--<li><span class="simptip-position-bottom simptip-movable" data-tooltip="more"><a-->
                     <#--href="movie.html"> </a></span></li>-->
-        <#--</ul>-->
+        </ul>
     </div>
     <div class="col-sm-3 header_right">
     <#if user??>
