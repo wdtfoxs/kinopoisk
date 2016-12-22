@@ -8,11 +8,13 @@ function addComment(id) {
         success: function (comment) {
             // window.location.href = "/cart/get";
             // alert('Удалено');
+            var date = new Date();
             $(document).ready(function(){
                 $("#comlist").prepend('<ul class="single_list">' +
                     '<div class="panel panel-primary">' +
                     '<div class="panel-body">' +
-                    comment.user.name +":"+ comment.date+
+                    comment.user.username +":"+ date.getDate()+"."+ date.getMonth()+"." + date.getFullYear() +" " + date.getHours()+":"+ date.getMinutes()
+                    +":"+ date.getSeconds() +
                     '</div> ' +
                     '<div class="panel-footer">'+comment.content+'</div> ' +
                     '</div> ' +

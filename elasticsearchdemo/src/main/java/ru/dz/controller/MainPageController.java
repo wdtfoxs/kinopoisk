@@ -38,11 +38,11 @@ public class MainPageController {
 
     @PostConstruct
     private void init() {
-//        AutoCompite autoCompite = new AutoCompite();
-//        countryRepository.save(autoCompite.loadCountryFromJson());
-//        peopleRepository.save(autoCompite.loadPeopleFromJson());
-//        awardRepository.save(autoCompite.loadAwardsFromJson());
-//        movieRepository.save(autoCompite.loadMoviesFromJson());
+        AutoCompite autoCompite = new AutoCompite();
+        movieRepository.save(autoCompite.loadMoviesFromJson());
+        countryRepository.save(autoCompite.loadCountryFromJson());
+        peopleRepository.save(autoCompite.loadPeopleFromJson());
+        awardRepository.save(autoCompite.loadAwardsFromJson());
 //        ArrayList<Movie> movies = (ArrayList<Movie>) movieRepository.findAll();
 //        for (Movie movy : movies) {
 //            Movie added = movieRepository.saveAndFlush(movy);
