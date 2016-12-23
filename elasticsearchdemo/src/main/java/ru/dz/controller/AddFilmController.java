@@ -9,13 +9,15 @@ import ru.dz.aspects.annotation.IncludeUser;
 import ru.dz.elastic.MovieSearchService;
 import ru.dz.entity.Movie;
 import ru.dz.entity.People;
+import ru.dz.entity.enums.Role;
 import ru.dz.repository.CountryRepository;
 import ru.dz.repository.MovieRepository;
 import ru.dz.repository.PeopleRepository;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Controller
 @RequestMapping(value = "/add")
@@ -64,29 +66,65 @@ public class AddFilmController {
         movieRepository.saveAndFlush(movie);
         movieSearchService.add(movieRepository.saveAndFlush(movie));
         request.getSession().setAttribute("movie", movie);
-        return "redirect:/movie/" + movie.getId();
-//        return "redirect:/actor";
+//        return "redirect:/movie/" + movie.getId();
+        return "redirect:/add/actor";
 //        System.out.println(name +" : " + description + " : " +
 //        year + " : " + age + " : " + image + " : " + trailer + " : " +
 //        country);
     }
 
+    @IncludeUser
     @RequestMapping(value = "/actor", method = RequestMethod.GET)
     public String addActorToFilm(){
+        request.setAttribute("show", "1");
         if (request.getSession().getAttribute("movie") != null){
-            request.setAttribute("actors", peopleRepository.findAll());
+            List<Role> roles = Arrays.asList(Role.values());
+            request.setAttribute("roles", roles);
+            if (request.getSession().getAttribute("actors") == null) {
+                List<People> people = peopleRepository.findAll();
+                request.setAttribute("actors", people);
+                request.getSession().setAttribute("actors", people);
+            } else {
+                if (((List<People>) request.getSession().getAttribute("actors")).size() == 0){
+                    request.setAttribute("show", "0");
+                } else {
+                    request.setAttribute("actors", request.getSession().getAttribute("actors"));
+                }
+                request.setAttribute("actorsForFilm", request.getSession().getAttribute("actorsForFilm"));
+            }
             return "addActorToFilm";
         } else {
             return "redirect:/add";
         }
     }
 
-    @RequestMapping(value = "/actor/add", method = RequestMethod.POST)
-    public String addActor(@RequestParam Long id){
-        List actors = (List) request.getAttribute("actors");
-        People actor = peopleRepository.findOne(id);
-        actors.remove(actor);
-        request.setAttribute("actors", actors);
-        return "kek";
+    @RequestMapping(value = "/addActor", method = RequestMethod.POST)
+    public String addActor(@RequestParam String actor, @RequestParam String role){
+        List<People> actors = (List<People>) request.getSession().getAttribute("actors");
+        List<People> actorsForFilm = (List<People>) request.getSession().getAttribute("actorsForFilm");
+        if (actorsForFilm == null)
+            actorsForFilm = new ArrayList<>();
+        for (People p: actors) {
+            if (p.getId() == Long.valueOf(actor)){
+                p.setRole(Role.valueOf(role));
+                peopleRepository.saveAndFlush(p);
+                actorsForFilm.add(p);
+                actors.remove(p);
+                break;
+            }
+        }
+        request.getSession().setAttribute("actors", actors);
+        request.getSession().setAttribute("actorsForFilm", actorsForFilm);
+        return "redirect:/add/actor";
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String saveActors(){
+        Movie movie = (Movie) request.getSession().getAttribute("movie");
+        movie.setPeoples((List<People>) request.getSession().getAttribute("actorsForFilm"));
+        movieRepository.saveAndFlush(movie);
+        request.getSession().setAttribute("actors", null);
+        request.getSession().setAttribute("actorsForFilm", null);
+        return "redirect:/movie/" + movie.getId();
     }
 }
